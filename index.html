@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>SSEE - PLANTAS EGP - ERNC | Centro de Control Enel Green Power</title>
+
+  <!-- PWA & Mobile Meta Tags (Android & iOS) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="SSEE EGP">
+  <meta name="application-name" content="SSEE EGP">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            solar: '#F28E2B',
+            wind: '#228B22',
+            bess: '#34495E',
+            enel: {
+              red: '#FF4A3D',
+              orange: '#FF7A00',
+              blue: '#0085CA',
+              green: '#74C82C',
+              dark: '#1A1C20'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          },
+          boxShadow: {
+            'glow-solar': '0 10px 25px -5px rgba(242, 142, 43, 0.35)',
+            'glow-wind': '0 10px 25px -5px rgba(34, 139, 34, 0.35)',
+            'glow-bess': '0 10px 25px -5px rgba(52, 73, 94, 0.4)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.4);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(156, 163, 175, 0.7);
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: rgba(75, 85, 99, 0.5);
+    }
+    .dark ::-webkit-scrollbar-thumb:hover {
+      background: rgba(107, 114, 128, 0.8);
+    }
+
+    /* Transition utilities */
+    .banner-transition {
+      transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    /* Subtle pulse animation for online status */
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.95); }
+    }
+    .animate-pulse-slow {
+      animation: pulse-slow 3s infinite ease-in-out;
+    }
+
+    /* Enel Gradient Text */
+    .enel-gradient-text {
+      background: linear-gradient(135deg, #FF7A00 0%, #E6007E 50%, #0085CA 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="h-full bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased flex flex-col transition-colors duration-200 selection:bg-orange-500 selection:text-white">
+
+  <!-- ========================================================================= -->
+  <!-- TOP GLOBAL HEADER BAR                                                    -->
+  <!-- ========================================================================= -->
+  <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm shrink-0 z-30 sticky top-0">
+    <div class="px-4 lg:px-6 py-2.5 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Title -->
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 via-emerald-600 to-slate-700 flex items-center justify-center text-white shadow-md shadow-slate-300 dark:shadow-none">
+          <i data-lucide="zap" class="w-5 h-5 text-white stroke-[2.5]"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base lg:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+              SSEE - PLANTAS EGP - ERNC
+            </h1>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse-slow"></span> En Operación
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">
+            Centro de Control &bull; Operación de Subestaciones y Generación ERNC &bull; Turno AA
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Metrics & System Controls -->
+      <div class="flex items-center gap-2 lg:gap-4">
+        
+        <!-- Live Clock -->
+        <div class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/70 text-xs font-mono text-slate-600 dark:text-slate-300">
+          <i data-lucide="clock" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span id="liveClock">--:--:--</span>
+          <span class="text-[10px] text-slate-400 font-sans ml-1">CLST</span>
+        </div>
+
+        <!-- System Stats Quick Pill -->
+        <div class="hidden xl:flex items-center gap-3 text-xs bg-slate-50 dark:bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700/70 text-slate-600 dark:text-slate-300">
+          <div class="flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-solar"></span>
+            <span>12 PFV</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-wind"></span>
+            <span>11 PE</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-bess"></span>
+            <span>3 BESS</span>
+          </div>
+          <div class="border-l border-slate-300 dark:border-slate-700 pl-2 font-semibold text-slate-800 dark:text-slate-200">
+            2.85 GW Totales
+          </div>
+        </div>
+
+        <!-- Ver en Celular / Compartir -->
+        <button id="shareMobileBtn" onclick="openShareModal()" title="Compartir y ver en celular" class="px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/70 dark:hover:bg-blue-900/80 text-blue-700 dark:text-blue-300 font-semibold text-xs flex items-center gap-1.5 transition-colors border border-blue-200 dark:border-blue-800 shadow-2xs">
+          <i data-lucide="smartphone" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+          <span class="hidden sm:inline">Ver en Celular</span>
+        </button>
+
+        <!-- Dark / Light Mode Toggle -->
+        <button id="themeToggleBtn" onclick="toggleTheme()" title="Cambiar tema día/noche" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors border border-slate-200 dark:border-slate-700">
+          <i id="themeIcon" data-lucide="moon" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Mobile Filter Toggle -->
+        <button id="mobileSidebarToggle" onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+          <i data-lucide="menu" class="w-4 h-4"></i>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN APPLICATION CONTAINER (SIDEBAR + MAIN DASHBOARD)                     -->
+  <!-- ========================================================================= -->
+  <div class="flex-1 flex overflow-hidden relative">
+
+    <!-- BACKDROP FOR MOBILE SIDEBAR -->
+    <div id="sidebarBackdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/60 z-30 lg:hidden hidden backdrop-blur-sm transition-opacity"></div>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!-- 1. LEFT SIDEBAR: REAL-TIME SEARCH & INTERACTIVE ASSET LIST              -->
+    <!-- ----------------------------------------------------------------------- -->
+    <aside id="sidebar" class="w-80 sm:w-96 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0 z-40 transition-transform duration-300 ease-in-out lg:translate-x-0 -translate-x-full lg:static fixed inset-y-0 left-0 pt-0">
+      
+      <!-- Mobile Drawer Header -->
+      <div class="lg:hidden flex items-center justify-between p-3.5 border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80">
+        <span class="font-bold text-xs uppercase tracking-wider text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+          <i data-lucide="layers" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+          Seleccionar Activo EGP
+        </span>
+        <button onclick="toggleMobileSidebar()" class="p-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Search Box & Filter Chips Header -->
+      <div class="p-3.5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/90 shrink-0 space-y-3">
+        
+        <!-- Real-time Search Input -->
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+            <i data-lucide="search" class="w-4 h-4"></i>
+          </div>
+          <input 
+            type="text" 
+            id="searchInput" 
+            oninput="handleSearch(this.value)"
+            placeholder="Buscar por planta, subestación, equipo..." 
+            class="w-full pl-9 pr-8 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm"
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <button 
+            id="clearSearchBtn" 
+            onclick="clearSearch()" 
+            class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hidden"
+            title="Limpiar búsqueda"
+          >
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Quick Filter Technology Pills -->
+        <div class="flex items-center gap-1.5">
+          <button 
+            id="filter-ALL" 
+            onclick="setTechFilter('ALL')" 
+            class="filter-pill flex-1 py-1.5 px-2 rounded-md text-xs font-semibold text-center transition-all bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm"
+          >
+            Todos <span id="count-ALL" class="opacity-75 font-mono text-[11px] ml-0.5">(26)</span>
+          </button>
+          
+          <button 
+            id="filter-Solar" 
+            onclick="setTechFilter('Solar')" 
+            class="filter-pill flex-1 py-1.5 px-2 rounded-md text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-800 transition-all text-center flex items-center justify-center gap-1"
+          >
+            <span class="w-2 h-2 rounded-full bg-solar"></span>
+            PFV <span id="count-Solar" class="text-slate-400 font-mono text-[11px]">(12)</span>
+          </button>
+
+          <button 
+            id="filter-Wind" 
+            onclick="setTechFilter('Wind')" 
+            class="filter-pill flex-1 py-1.5 px-2 rounded-md text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-800 transition-all text-center flex items-center justify-center gap-1"
+          >
+            <span class="w-2 h-2 rounded-full bg-wind"></span>
+            PE <span id="count-Wind" class="text-slate-400 font-mono text-[11px]">(11)</span>
+          </button>
+
+          <button 
+            id="filter-BESS" 
+            onclick="setTechFilter('BESS')" 
+            class="filter-pill flex-1 py-1.5 px-2 rounded-md text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-800 transition-all text-center flex items-center justify-center gap-1"
+          >
+            <span class="w-2 h-2 rounded-full bg-bess"></span>
+            BESS <span id="count-BESS" class="text-slate-400 font-mono text-[11px]">(3)</span>
+          </button>
+        </div>
+
+        <!-- Filter Results Counter & Keyboard hint -->
+        <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 px-0.5">
+          <span id="resultsCount">Mostrando 26 activos</span>
+          <span class="hidden sm:inline text-slate-400">Teclas &uarr;&darr; para navegar</span>
+        </div>
+
+      </div>
+
+      <!-- Scrollable Plant List Container -->
+      <div id="plantListContainer" class="flex-1 overflow-y-auto p-2 space-y-1 divide-y divide-transparent">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+      <!-- Sidebar Status Footer -->
+      <div class="p-2.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between">
+        <span class="flex items-center gap-1.5">
+          <i data-lucide="server" class="w-3.5 h-3.5 text-emerald-500"></i>
+          Base SSEE: 26 Centrales ERNC
+        </span>
+        <span class="font-mono text-[10px] bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-600 dark:text-slate-300">
+          v2.6 Web
+        </span>
+      </div>
+
+    </aside>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!-- 2. RIGHT MAIN PANEL: OPERATIONAL DASHBOARD                               -->
+    <!-- ----------------------------------------------------------------------- -->
+    <main class="flex-1 flex flex-col overflow-y-auto bg-slate-100 dark:bg-slate-950 p-3 sm:p-5 lg:p-6 transition-all">
+      <div class="max-w-7xl w-full mx-auto flex-1 flex flex-col justify-between space-y-5">
+        
+        <!-- TOP CARD SECTION: BANNER + OPERATIONAL DETAILS -->
+        <div class="space-y-5">
+          
+          <!-- ================================================================= -->
+          <!-- A. DYNAMIC TOP BANNER (COLOR + TECH ICON + PLANT NAME)           -->
+          <!-- ================================================================= -->
+          <div 
+            id="dynamicBanner" 
+            class="banner-transition rounded-2xl p-5 lg:p-7 text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative overflow-hidden"
+            style="background-color: #F28E2B;"
+          >
+            <!-- Decorative Background Graphic -->
+            <div class="absolute -right-8 -bottom-10 opacity-10 pointer-events-none select-none text-white">
+              <svg width="240" height="240" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+
+            <!-- Left Banner Info: Badge, Plant Title, Subtitle -->
+            <div class="space-y-2 z-10 max-w-3xl">
+              
+              <!-- Badges Row -->
+              <div class="flex flex-wrap items-center gap-2">
+                <span id="bannerTechBadge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/20 backdrop-blur-md text-white border border-white/20">
+                  <span id="badgeIconContainer"></span>
+                  <span id="bannerTechText">SOLAR / PFV</span>
+                </span>
+
+                <span id="bannerCapacityBadge" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold font-mono bg-black/25 backdrop-blur-md text-white border border-white/15">
+                  <i data-lucide="gauge" class="w-3.5 h-3.5"></i>
+                  <span id="bannerCapacityText">59 MW</span>
+                </span>
+
+                <span id="bannerOwnerBadge" class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-black/20 text-white/90">
+                  <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
+                  <span id="bannerOwnerText">Enel Green Power</span>
+                </span>
+              </div>
+
+              <!-- Main Plant Title (Exact VBA Me.lblNombrePlanta.Caption) -->
+              <h2 id="bannerPlantName" class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight drop-shadow-sm text-white">
+                PFV - Azabache [59MW]
+              </h2>
+
+              <!-- Operational Context Subtitle -->
+              <p id="bannerSubContext" class="text-white/85 text-xs sm:text-sm font-medium flex flex-wrap items-center gap-x-3 gap-y-1">
+                <span>Interconexión SEN</span>
+                <span class="opacity-60">&bull;</span>
+                <span id="bannerSePrimariaQuick">S/E Chi Chiu</span>
+                <span class="opacity-60">&rarr;</span>
+                <span id="bannerSeSecundariaQuick">S/E Calama nueva</span>
+              </p>
+            </div>
+
+            <!-- Right Banner: Dynamic Big Technology SVG Icon & Action Tools -->
+            <div class="flex items-center gap-4 z-10 self-end md:self-center shrink-0">
+              
+              <!-- Copy Logbook Summary Button -->
+              <button 
+                onclick="copyOperationalSummary()" 
+                class="px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 active:bg-white/30 backdrop-blur-md text-white text-xs font-semibold flex items-center gap-2 border border-white/25 shadow-sm transition-all"
+                title="Copiar ficha de la planta para bitácora de turno"
+              >
+                <i data-lucide="copy" class="w-4 h-4"></i>
+                <span class="hidden sm:inline">Copiar Ficha</span>
+              </button>
+
+              <!-- Dynamic Large Tech Icon (Sol, Viento o Batería) -->
+              <div 
+                id="dynamicTechIconWrapper" 
+                class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white shadow-inner transform transition-transform hover:scale-105"
+              >
+                <!-- Injected via updateTechIcon() -->
+                <div id="techIconContainer"></div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ================================================================= -->
+          <!-- B. SUBESTACIONES BLOCKS (S/E PRIMARIA & S/E SECUNDARIA)           -->
+          <!-- ================================================================= -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            
+            <!-- --------------------------------------------------------------- -->
+            <!-- BLOQUE S/E PRIMARIA                                             -->
+            <!-- --------------------------------------------------------------- -->
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+              
+              <!-- Subtle accent top border -->
+              <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
+
+              <!-- Card Header -->
+              <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100 dark:border-slate-800">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">
+                    <i data-lucide="zap" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      S/E Primaria
+                      <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300">Punto de Inyección</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Instalación y paño de conexión de la planta</p>
+                  </div>
+                </div>
+                <button 
+                  onclick="copyField('lblSEPrimaria', 'Subestación Primaria')" 
+                  class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  title="Copiar datos S/E Primaria"
+                >
+                  <i data-lucide="copy" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <!-- Primary S/E Detail Fields -->
+              <div class="space-y-4">
+                
+                <!-- Subestación -->
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/70 dark:border-slate-700/60">
+                  <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                    Subestación
+                  </span>
+                  <div id="lblSEPrimaria" class="text-lg font-bold text-slate-900 dark:text-white font-mono flex items-center gap-2">
+                    Chi Chiu
+                  </div>
+                </div>
+
+                <!-- Propietario -->
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/70 dark:border-slate-700/60">
+                  <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                    Propietario S/E
+                  </span>
+                  <div class="flex items-center justify-between">
+                    <span id="lblPropietarioPrimario" class="text-base font-semibold text-slate-800 dark:text-slate-200">
+                      Acciona
+                    </span>
+                    <span id="badgePropietarioPrimario" class="text-[11px] px-2 py-0.5 rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                      Tercero
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Equipos EGP (Breakers, Disconnectors, Transformers) -->
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/70 dark:border-slate-700/60">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                      Equipos EGP
+                    </span>
+                    <button 
+                      onclick="copyField('lblEquiposPrimarios', 'Equipos Primarios')" 
+                      class="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                    >
+                      <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+                    </button>
+                  </div>
+                  <div id="lblEquiposPrimarios" class="text-sm font-semibold font-mono text-slate-900 dark:text-white bg-white dark:bg-slate-900/90 p-3 rounded-lg border border-slate-200 dark:border-slate-700/80 break-words">
+                    FT3 - HT3 - [H1 - H2 Acciona]
+                  </div>
+                  <!-- Parsed Interactive Tags Container -->
+                  <div id="equiposPrimariosTags" class="flex flex-wrap gap-1.5 mt-2.5">
+                    <!-- Injected via JavaScript -->
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- --------------------------------------------------------------- -->
+            <!-- BLOQUE S/E SECUNDARIA                                           -->
+            <!-- --------------------------------------------------------------- -->
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+              
+              <!-- Subtle accent top border -->
+              <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-600"></div>
+
+              <!-- Card Header -->
+              <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100 dark:border-slate-800">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
+                    <i data-lucide="network" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      S/E Secundaria
+                      <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">Enlace / Troncal</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Subestación seccionadora o de interconexión al SEN</p>
+                  </div>
+                </div>
+                <button 
+                  onclick="copyField('lblSESecundaria', 'Subestación Secundaria')" 
+                  class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  title="Copiar datos S/E Secundaria"
+                >
+                  <i data-lucide="copy" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <!-- Secondary S/E Detail Fields -->
+              <div class="space-y-4">
+                
+                <!-- Subestación Secundaria -->
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/70 dark:border-slate-700/60">
+                  <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                    Subestación Secundaria
+                  </span>
+                  <div id="lblSESecundaria" class="text-lg font-bold text-slate-900 dark:text-white font-mono flex items-center gap-2">
+                    Calama nueva
+                  </div>
+                </div>
+
+                <!-- Propietario Secundario -->
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/70 dark:border-slate-700/60">
+                  <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                    Propietario S/E Secundaria
+                  </span>
+                  <div class="flex items-center justify-between">
+                    <span id="lblPropietarioSecundario" class="text-base font-semibold text-slate-800 dark:text-slate-200">
+                      Acciona
+                    </span>
+                    <span id="badgePropietarioSecundario" class="text-[11px] px-2 py-0.5 rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                      Tercero
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Equipos Secundarios -->
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/70 dark:border-slate-700/60">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                      Equipos
+                    </span>
+                    <button 
+                      onclick="copyField('lblEquiposSecundarios', 'Equipos Secundarios')" 
+                      class="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                    >
+                      <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+                    </button>
+                  </div>
+                  <div id="lblEquiposSecundarios" class="text-sm font-semibold font-mono text-slate-900 dark:text-white bg-white dark:bg-slate-900/90 p-3 rounded-lg border border-slate-200 dark:border-slate-700/80 break-words">
+                    H3
+                  </div>
+                  <!-- Parsed Interactive Tags Container -->
+                  <div id="equiposSecundariosTags" class="flex flex-wrap gap-1.5 mt-2.5">
+                    <!-- Injected via JavaScript -->
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- ================================================================= -->
+          <!-- C. TOPOLOGY FLOW DIAGRAM (SIMPLIFIED SINGLE-LINE OVERVIEW)        -->
+          <!-- ================================================================= -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="flex items-center justify-between mb-3 text-xs text-slate-500 dark:text-slate-400">
+              <span class="font-bold uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="git-commit" class="w-4 h-4 text-blue-500"></i>
+                Esquema Operacional de Enlace
+              </span>
+              <span class="text-[11px] text-slate-400">Flujo de Generación &rarr; Inyección SEN</span>
+            </div>
+
+            <!-- Flow Cards Diagram -->
+            <div class="flex flex-col md:flex-row items-center justify-between gap-3 text-center">
+              
+              <!-- Plant Node -->
+              <div class="w-full md:w-1/3 bg-slate-50 dark:bg-slate-800/80 rounded-xl p-3 border border-slate-200 dark:border-slate-700">
+                <span class="text-[10px] font-bold uppercase text-slate-400 block mb-0.5">Parque / Generador</span>
+                <span id="diagramPlantNode" class="text-sm font-bold text-slate-800 dark:text-slate-100">PFV Azabache</span>
+                <span id="diagramMwNode" class="block text-xs font-mono text-slate-500 dark:text-slate-400 mt-0.5">59 MW</span>
+              </div>
+
+              <!-- Connection Arrow 1 -->
+              <div class="flex items-center text-slate-400 dark:text-slate-600 shrink-0">
+                <i data-lucide="arrow-right" class="w-5 h-5 hidden md:block"></i>
+                <i data-lucide="arrow-down" class="w-5 h-5 md:hidden"></i>
+              </div>
+
+              <!-- Primary S/E Node -->
+              <div class="w-full md:w-1/3 bg-blue-50/70 dark:bg-blue-950/40 rounded-xl p-3 border border-blue-200 dark:border-blue-900/60">
+                <span class="text-[10px] font-bold uppercase text-blue-600 dark:text-blue-400 block mb-0.5">S/E Primaria</span>
+                <span id="diagramSePrimariaNode" class="text-sm font-bold text-slate-800 dark:text-slate-100">Chi Chiu</span>
+                <span id="diagramEqPrimariaNode" class="block text-xs font-mono text-blue-700 dark:text-blue-300 mt-0.5 truncate">FT3 - HT3</span>
+              </div>
+
+              <!-- Connection Arrow 2 -->
+              <div class="flex items-center text-slate-400 dark:text-slate-600 shrink-0">
+                <i data-lucide="arrow-right" class="w-5 h-5 hidden md:block"></i>
+                <i data-lucide="arrow-down" class="w-5 h-5 md:hidden"></i>
+              </div>
+
+              <!-- Secondary S/E Node -->
+              <div class="w-full md:w-1/3 bg-emerald-50/70 dark:bg-emerald-950/40 rounded-xl p-3 border border-emerald-200 dark:border-emerald-900/60">
+                <span class="text-[10px] font-bold uppercase text-emerald-600 dark:text-emerald-400 block mb-0.5">S/E Secundaria</span>
+                <span id="diagramSeSecundariaNode" class="text-sm font-bold text-slate-800 dark:text-slate-100">Calama nueva</span>
+                <span id="diagramEqSecundariaNode" class="block text-xs font-mono text-emerald-700 dark:text-emerald-300 mt-0.5 truncate">H3</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ================================================================= -->
+          <!-- D. SERVICIOS COMPLEMENTARIOS (SSCC) LOWER BLOCK                  -->
+          <!-- ================================================================= -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            
+            <div class="flex items-start sm:items-center gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 mt-0.5 sm:mt-0 font-bold">
+                <i data-lucide="sliders" class="w-5 h-5"></i>
+              </div>
+              
+              <div>
+                <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Coordinador Eléctrico Nacional (CEN) &bull; Regulación
+                </span>
+                
+                <!-- EXACT REQUIRED CAPTION FORMAT: "Tipo SSCC: [valor]" (or "Tipo SSCC: No registra") -->
+                <div class="flex flex-wrap items-center gap-2 mt-0.5">
+                  <span id="lblTipoSSCC" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white font-mono">
+                    Tipo SSCC: No registra
+                  </span>
+                  <span id="badgeSSCCStatus" class="text-xs px-2.5 py-0.5 rounded-full font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                    Sin prestación activa
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- SSCC Explanatory Legend / Details -->
+            <div id="ssccDescriptionBox" class="text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/60 px-3.5 py-2 rounded-xl border border-slate-200/80 dark:border-slate-700/60 md:max-w-md">
+              <span id="ssccDescriptionText">Esta planta no cuenta con habilitación de Servicios Complementarios registrada.</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- E. CORPORATE BRANDING IN BOTTOM RIGHT CORNER ("enel Green Power")    -->
+        <!-- =================================================================== -->
+        <footer class="pt-4 pb-2 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+          
+          <div class="flex items-center gap-3">
+            <span class="font-medium text-slate-600 dark:text-slate-300">
+              Centro de Control ERNC
+            </span>
+            <span class="text-slate-300 dark:text-slate-700">&bull;</span>
+            <span class="font-mono text-[11px]">Turno AA &bull; Sala de Despacho G&T Chile</span>
+          </div>
+
+          <!-- Enel Green Power Official Branding -->
+          <div class="flex items-center gap-3 bg-white dark:bg-slate-900 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm self-end sm:self-auto">
+            
+            <!-- Dual Icon (Wind & Sun) matching Excel screenshot -->
+            <div class="flex items-center gap-1.5 text-slate-400 dark:text-slate-500 pr-2 border-r border-slate-200 dark:border-slate-700">
+              <i data-lucide="wind" class="w-4 h-4 text-emerald-500"></i>
+              <i data-lucide="sun" class="w-4 h-4 text-amber-500"></i>
+            </div>
+
+            <!-- Stylized Enel Logo Mark + Green Power -->
+            <div class="flex items-baseline gap-1.5 select-none">
+              <!-- Enel stylized wordmark: lowercase letters with signature rainbow curves -->
+              <span class="font-extrabold text-lg tracking-tight flex items-center">
+                <span class="text-[#FF7A00]">e</span>
+                <span class="text-[#9B26B6]">n</span>
+                <span class="text-[#0085CA]">e</span>
+                <span class="text-[#74C82C]">l</span>
+              </span>
+              <!-- Green Power corporate font -->
+              <span class="font-semibold text-slate-800 dark:text-white tracking-normal text-xs">
+                Green Power
+              </span>
+            </div>
+
+          </div>
+
+        </footer>
+
+      </div>
+    </main>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: VER Y COMPARTIR EN CELULAR (ANDROID / IPHONE)                     -->
+  <!-- ========================================================================= -->
+  <div id="shareModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm hidden transition-opacity">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">
+            <i data-lucide="smartphone" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+              Ver en Celular (Android / iPhone)
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Accede al dashboard operacional desde tu teléfono móvil
+            </p>
+          </div>
+        </div>
+        <button onclick="closeShareModal()" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Option 1: QR Code & Link -->
+      <div class="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-slate-200 dark:border-slate-700/80 flex flex-col sm:flex-row items-center gap-4">
+        <!-- QR Code -->
+        <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm shrink-0 flex flex-col items-center">
+          <img id="modalQrCodeImg" src="" alt="Código QR Dashboard" class="w-32 h-32 object-contain rounded">
+          <span class="text-[10px] text-slate-400 font-medium mt-1">Escanear con cámara</span>
+        </div>
+
+        <!-- URL & Quick Actions -->
+        <div class="flex-1 w-full space-y-2 text-center sm:text-left">
+          <span class="text-xs font-bold text-slate-700 dark:text-slate-200 block">
+            Enlace de Acceso
+          </span>
+          <div class="flex items-center gap-1.5">
+            <input 
+              type="text" 
+              id="shareUrlInput" 
+              readonly 
+              class="w-full text-xs font-mono bg-white dark:bg-slate-900 px-2.5 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 select-all"
+            >
+            <button 
+              onclick="copyShareUrl()" 
+              title="Copiar enlace"
+              class="px-3 py-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-lg text-xs font-semibold shrink-0 transition-colors shadow-sm"
+            >
+              Copiar
+            </button>
+          </div>
+
+          <div class="flex flex-wrap gap-2 pt-1 justify-center sm:justify-start">
+            <button 
+              onclick="shareViaWhatsApp()" 
+              class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm"
+            >
+              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+              Enviar por WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Installation Guide (PWA / Home Screen) -->
+      <div class="space-y-3">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          ¿Cómo instalarlo como App en el teléfono?
+        </h4>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- iPhone iOS -->
+          <div class="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-700/60 space-y-1.5">
+            <div class="flex items-center gap-2 text-slate-900 dark:text-white font-bold text-xs">
+              <i data-lucide="apple" class="w-4 h-4 text-slate-700 dark:text-slate-300"></i>
+              iPhone (Safari)
+            </div>
+            <ol class="text-[11px] text-slate-600 dark:text-slate-400 space-y-1 list-decimal list-inside">
+              <li>Abre el enlace en <b>Safari</b>.</li>
+              <li>Toca el botón <b>Compartir</b> <i data-lucide="share" class="w-3 h-3 inline"></i> (cuadrado con flecha).</li>
+              <li>Elige <b>"Agregar a pantalla de inicio"</b>.</li>
+              <li>¡Listo! Quedará como app nativa.</li>
+            </ol>
+          </div>
+
+          <!-- Android -->
+          <div class="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-700/60 space-y-1.5">
+            <div class="flex items-center gap-2 text-slate-900 dark:text-white font-bold text-xs">
+              <i data-lucide="play" class="w-4 h-4 text-emerald-600"></i>
+              Android (Chrome)
+            </div>
+            <ol class="text-[11px] text-slate-600 dark:text-slate-400 space-y-1 list-decimal list-inside">
+              <li>Abre el enlace en <b>Chrome</b>.</li>
+              <li>Toca el menú de <b>3 puntos</b> (&vellip;) arriba.</li>
+              <li>Selecciona <b>"Agregar a pantalla principal"</b> o <b>"Instalar aplicación"</b>.</li>
+              <li>¡Listo! Acceso directo en tu celular.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hosting Note -->
+      <div class="bg-blue-50/70 dark:bg-blue-950/40 p-3 rounded-xl border border-blue-200/70 dark:border-blue-900/60 text-[11px] text-blue-800 dark:text-blue-300 space-y-1">
+        <p class="font-bold flex items-center gap-1.5">
+          <i data-lucide="info" class="w-3.5 h-3.5"></i>
+          Para compartir con todo el equipo de turno:
+        </p>
+        <p class="text-blue-700 dark:text-blue-400">
+          Puedes arrastrar este archivo a <b>Netlify Drop</b> (app.netlify.com/drop) o <b>GitHub Pages</b> para tener un enlace web permanente accesible desde cualquier red sin depender de tu PC encendido.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- TOAST NOTIFICATION FOR COPY TO CLIPBOARD                                  -->
+  <!-- ========================================================================= -->
+  <div id="toastNotification" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2.5 text-xs font-semibold">
+      <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 dark:text-emerald-600"></i>
+      <span id="toastMessage">Copiado al portapapeles</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT: DATASET, ENGINE & USER INTERACTION                            -->
+  <!-- ========================================================================= -->
+  <script>
+    // -------------------------------------------------------------------------
+    // 1. DATASET OF ALL 26 EGP ERNC PLANTS (PRELOADED FULL REPOSITORY)
+    // -------------------------------------------------------------------------
+    const PLANTS_DATA = [
+      {
+        tecnologia: "Solar",
+        nombre: "PFV - Azabache [59MW]",
+        se_primaria: "Chi Chiu",
+        propietario_primario: "Acciona",
+        equipos_primarios: "FT3 - HT3 - [H1 - H2 Acciona]",
+        se_secundaria: "Calama nueva",
+        propietario_secundario: "Acciona",
+        equipos_secundarios: "H3",
+        tipo_sscc: ""
+      },
+      {
+        tecnologia: "Solar",
+        nombre: "PFV - Finis Terrae [250MW]",
+        se_primaria: "Rande",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "JT1 - JT2 - JT3 - J1",
+        se_secundaria: "Encuentro",
+        propietario_secundario: "Transelec",
+        equipos_secundarios: "J16 [EGP]",
+        tipo_sscc: ""
+      },
+      {
+        tecnologia: "Solar",
+        nombre: "PFV - Lalackama [72MW]",
+        se_primaria: "Lalackama",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "ET1 - JT1",
+        se_secundaria: "Arena",
+        propietario_secundario: "EnorChile",
+        equipos_secundarios: "J2",
+        tipo_sscc: ""
+      },
+      {
+        tecnologia: "Solar",
+        nombre: "PFV - Las Salinas [203MW]",
+        se_primaria: "Las Salinas",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FT11 - FT12 - FT21 - FT22 - JT1 - JT2 - J1",
+        se_secundaria: "Centinela",
+        propietario_secundario: "Redinter",
+        equipos_secundarios: "J10 - J11 - J12 [INT 1/2]",
+        tipo_sscc: "CPF"
+      },
+      {
+        tecnologia: "Solar",
+        nombre: "PFV - Sol de Lila [152MW]",
+        se_primaria: "Sol de Lila",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FT1 - FT2 - JT1",
+        se_secundaria: "Andes",
+        propietario_secundario: "AES Andes",
+        equipos_secundarios: "J12 [EGP]",
+        tipo_sscc: ""
+      },
+      {
+        tecnologia: "Solar",
+        nombre: "PFV - Valle del sol [153MW]",
+        se_primaria: "Valle del sol",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FT1 - J1",
+        se_secundaria: "Miraje",
+        propietario_secundario: "Transelec",
+        equipos_secundarios: "J1 - J2 - J3 [INT 1/2]",
+        tipo_sscc: ""
+      },
+      {
+        tecnologia: "Solar",
+        nombre: "PFV - Guanchoi [367MW]",
+        se_primaria: "Bella Mónica",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FT11 - FT12 - FT21 - FT22 - JT1 - JT2 - J1",
+        se_secundaria: "Illapa",
+        propietario_secundario: "Celeo Redes",
+        equipos_secundarios: "J15 [EGP] - J14 -J13 [Colbún] [INT 1/2]",
+        tipo_sscc: ""
+      },
+      {
+        tecnologia: "Solar",
+        nombre: "PFV - Campos del sol [372MW]",
+        se_primaria: "Campos del sol",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FT1A - FT2A - FT1B - FT2B - JT1 - JT2 - J1",
+        se_secundaria: "Carrera Pinto",
+        propietario_secundario: "Transelec",
+        equipos_secundarios: "J17 - J18 [EGP]",
+        tipo_sscc: ""
+      },
+      {
+        tecnologia: "Solar",
+        nombre: "PFV - Chañares [36MW]",
+        se_primaria: "Chañares - Tap Off",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "ET1 - HT1 - H1",
+        se_secundaria: "Diego de Almagro",
+        propietario_secundario: "Transelec",
+        equipos_secundarios: "H9",
+        tipo_sscc: ""
+      },
+      {
+        tecnologia: "Solar",
+        nombre: "PFV - La Silla [1.6MW]",
+        se_primaria: "La Silla",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "E2 - E1",
+        se_secundaria: "Línea Pajonales",
+        propietario_secundario: "Transelec",
+        equipos_secundarios: "E1",
+        tipo_sscc: ""
+      },
+      {
+        tecnologia: "Solar",
+        nombre: "PFV - El Manzano [88MW]",
+        se_primaria: "Huertos familiares",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "F8",
+        se_secundaria: "El Manzano",
+        propietario_secundario: "STS [Saesa]",
+        equipos_secundarios: "F1 - FT5 - JT5 [EGP]",
+        tipo_sscc: ""
+      },
+      {
+        tecnologia: "Solar",
+        nombre: "PFV - Don Humberto [81MW]",
+        se_primaria: "Don Humberto",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FT1 - HT1 - H1",
+        se_secundaria: "Punta Peuco [Polpaico]",
+        propietario_secundario: "Punta Peuco (Polpaico)",
+        equipos_secundarios: "H2 [EGP]",
+        tipo_sscc: "CPF"
+      },
+      {
+        tecnologia: "Wind",
+        nombre: "PE - Valle de los vientos [90MW]",
+        se_primaria: "Valle de los vientos",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "ET1 - ET2 - [HT1 - HT2 - HL1 CGE]",
+        se_secundaria: "Calama nueva",
+        propietario_secundario: "CGE Transmisión",
+        equipos_secundarios: "H2",
+        tipo_sscc: "CTF"
+      },
+      {
+        tecnologia: "Wind",
+        nombre: "PE - Sierra Gorda [112MW]",
+        se_primaria: "El Arriero",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "ET1 - J1",
+        se_secundaria: "Sierra Gorda Este",
+        propietario_secundario: "EnorChile [MSGE]",
+        equipos_secundarios: "J3 [EGP]",
+        tipo_sscc: "CTF"
+      },
+      {
+        tecnologia: "Wind",
+        nombre: "PE- Taltal [102MW]",
+        se_primaria: "Taltal",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FT1 - [J1 Transelec]",
+        se_secundaria: "Jadresic",
+        propietario_secundario: "Transelec",
+        equipos_secundarios: "J8 - J9 - J7 [INT 1/2]",
+        tipo_sscc: "CTF"
+      },
+      {
+        tecnologia: "Wind",
+        nombre: "PE - Canela [18MW]",
+        se_primaria: "Seccionadora Canela",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "EG",
+        se_secundaria: "Las Palmas",
+        propietario_secundario: "Transelec",
+        equipos_secundarios: "JG(JT1) [EGP]",
+        tipo_sscc: "CTF"
+      },
+      {
+        tecnologia: "Wind",
+        nombre: "PE - Canela II [60MW]",
+        se_primaria: "Elevadora Canela II",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "CT1 - J1",
+        se_secundaria: "Las Palmas",
+        propietario_secundario: "Transelec",
+        equipos_secundarios: "J2 [EGP]",
+        tipo_sscc: "CTF"
+      },
+      {
+        tecnologia: "Wind",
+        nombre: "PE - Talinay Oriente [90MW]",
+        se_primaria: "Talinay",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "M7 - J1 -JL - [JL2 PtaTalca - EnorChile]",
+        se_secundaria: "La Cebada",
+        propietario_secundario: "Transelec",
+        equipos_secundarios: "J4",
+        tipo_sscc: "CTF"
+      },
+      {
+        tecnologia: "Wind",
+        nombre: "PE - Talinay Poniente [60MW]",
+        se_primaria: "Talinay",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FT2 - J2 -JL - [JL2 PtaTalca - EnorChile]",
+        se_secundaria: "La Cebada",
+        propietario_secundario: "Transelec",
+        equipos_secundarios: "J4",
+        tipo_sscc: "CTF"
+      },
+      {
+        tecnologia: "Wind",
+        nombre: "PE - La Cabaña [105MW]",
+        se_primaria: "La Cabaña",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FT1 - JT1",
+        se_secundaria: "Renaico",
+        propietario_secundario: "Enel Green Power",
+        equipos_secundarios: "JL2",
+        tipo_sscc: ""
+      },
+      {
+        tecnologia: "Wind",
+        nombre: "PE - Los Buenos Aires [24MW]",
+        se_primaria: "Los Buenos Aires",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FT1 - BT1 - B1 - B2",
+        se_secundaria: "Los Angeles & Negrete",
+        propietario_secundario: "CGE Transmisión",
+        equipos_secundarios: "B4 & B1",
+        tipo_sscc: "CTF"
+      },
+      {
+        tecnologia: "Wind",
+        nombre: "PE - Renaico [88MW]",
+        se_primaria: "Renaico",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FT1 - JT1 - JL1",
+        se_secundaria: "Mulchén",
+        propietario_secundario: "Celeo Redes",
+        equipos_secundarios: "J7 [EGP]",
+        tipo_sscc: "CTF"
+      },
+      {
+        tecnologia: "Wind",
+        nombre: "PE - Renaico II [144MW]",
+        se_primaria: "Renaico",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FT2 - JT2",
+        se_secundaria: "Mulchén",
+        propietario_secundario: "Celeo Redes",
+        equipos_secundarios: "J7 [EGP]",
+        tipo_sscc: ""
+      },
+      {
+        tecnologia: "BESS",
+        nombre: "BESS- PE La Cabaña [60MW]",
+        se_primaria: "La Cabaña",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FB1 - FB2 - FB3",
+        se_secundaria: "Renaico",
+        propietario_secundario: "Enel Green Power",
+        equipos_secundarios: "JL2",
+        tipo_sscc: "CPF - CSF"
+      },
+      {
+        tecnologia: "BESS",
+        nombre: "BESS- PFV Don Humberto [60MW]",
+        se_primaria: "Don Humberto",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "FB1 - FB2 - FB3",
+        se_secundaria: "Punta Peuco [Polpaico]",
+        propietario_secundario: "Polpaico",
+        equipos_secundarios: "H2",
+        tipo_sscc: "CPF - CSF"
+      },
+      {
+        tecnologia: "BESS",
+        nombre: "BESS- PFV El Manzano [60MW]",
+        se_primaria: "Huertos familiares",
+        propietario_primario: "Enel Green Power",
+        equipos_primarios: "F2 - F3 - F4 - F5 - F6 - F7",
+        se_secundaria: "El Manzano",
+        propietario_secundario: "STS [Saesa]",
+        equipos_secundarios: "FT5 - JT5",
+        tipo_sscc: "CPF - CSF"
+      }
+    ];
+
+    // -------------------------------------------------------------------------
+    // 2. STATE CONFIGURATION
+    // -------------------------------------------------------------------------
+    let currentPlantIndex = 0;
+    let selectedTechFilter = 'ALL';
+    let currentSearchTerm = '';
+    let filteredIndices = [];
+
+    // Technology metadata & color schemes matching VBA specifications
+    const TECH_THEMES = {
+      Solar: {
+        name: 'Solar (PFV)',
+        code: 'PFV',
+        color: '#F28E2B', // Exact VBA Naranja RGB(242, 142, 43)
+        tailwindColor: 'bg-solar',
+        iconName: 'sun',
+        glowClass: 'shadow-glow-solar',
+        svgIcon: `<svg class="w-10 h-10 sm:w-12 sm:h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2"/><path d="M12 20v2"/>
+                    <path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
+                    <path d="M2 12h2"/><path d="M20 12h2"/>
+                    <path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+                  </svg>`
+      },
+      Wind: {
+        name: 'Eólico (PE)',
+        code: 'PE',
+        color: '#228B22', // Exact VBA Verde RGB(34, 139, 34)
+        tailwindColor: 'bg-wind',
+        iconName: 'wind',
+        glowClass: 'shadow-glow-wind',
+        svgIcon: `<svg class="w-10 h-10 sm:w-12 sm:h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/>
+                    <path d="M9.6 4.6A2 2 0 1 1 11 8H2"/>
+                    <path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>
+                  </svg>`
+      },
+      BESS: {
+        name: 'BESS (Baterías)',
+        code: 'BESS',
+        color: '#34495E', // Exact VBA Azul pizarra RGB(52, 73, 94)
+        tailwindColor: 'bg-bess',
+        iconName: 'battery-charging',
+        glowClass: 'shadow-glow-bess',
+        svgIcon: `<svg class="w-10 h-10 sm:w-12 sm:h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/>
+                    <path d="M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1"/>
+                    <path d="m11 7-3 5h4l-3 5"/>
+                    <line x1="22" x2="22" y1="11" y2="13"/>
+                  </svg>`
+      }
+    };
+
+    // -------------------------------------------------------------------------
+    // 3. CORE RENDERING ENGINE
+    // -------------------------------------------------------------------------
+
+    // Get tech object from plant
+    function getTech(plant) {
+      const t = (plant.tecnologia || '').toLowerCase();
+      const n = (plant.nombre || '').toLowerCase();
+      if (t.includes('sol') || n.startsWith('pfv')) return TECH_THEMES.Solar;
+      if (t.includes('wind') || t.includes('eol') || t.includes('viento') || n.startsWith('pe')) return TECH_THEMES.Wind;
+      if (t.includes('bess') || n.startsWith('bess')) return TECH_THEMES.BESS;
+      return TECH_THEMES.Solar;
+    }
+
+    // Extract capacity MW string
+    function extractMW(nombre) {
+      const match = nombre.match(/\[(.*?)MW\]/i);
+      return match ? match[1] + ' MW' : '';
+    }
+
+    // Initialize Application
+    function initApp() {
+      // Calculate category counts
+      let counts = { ALL: PLANTS_DATA.length, Solar: 0, Wind: 0, BESS: 0 };
+      PLANTS_DATA.forEach(p => {
+        const tech = getTech(p);
+        if (tech === TECH_THEMES.Solar) counts.Solar++;
+        else if (tech === TECH_THEMES.Wind) counts.Wind++;
+        else if (tech === TECH_THEMES.BESS) counts.BESS++;
+      });
+
+      document.getElementById('count-ALL').innerText = `(${counts.ALL})`;
+      document.getElementById('count-Solar').innerText = `(${counts.Solar})`;
+      document.getElementById('count-Wind').innerText = `(${counts.Wind})`;
+      document.getElementById('count-BESS').innerText = `(${counts.BESS})`;
+
+      // Render sidebar items
+      filterAndRenderList();
+
+      // Load initial plant (Azabache by default)
+      selectPlant(0);
+
+      // Start live clock
+      startClock();
+
+      // Keyboard listeners
+      setupKeyboardNavigation();
+
+      // Init icons
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    }
+
+    // Filter and Render Plant List
+    function filterAndRenderList() {
+      const container = document.getElementById('plantListContainer');
+      const term = currentSearchTerm.trim().toLowerCase();
+      
+      filteredIndices = [];
+
+      PLANTS_DATA.forEach((plant, index) => {
+        const tech = getTech(plant);
+        
+        // Filter by technology
+        let matchesTech = false;
+        if (selectedTechFilter === 'ALL') matchesTech = true;
+        else if (selectedTechFilter === 'Solar' && tech === TECH_THEMES.Solar) matchesTech = true;
+        else if (selectedTechFilter === 'Wind' && tech === TECH_THEMES.Wind) matchesTech = true;
+        else if (selectedTechFilter === 'BESS' && tech === TECH_THEMES.BESS) matchesTech = true;
+
+        if (!matchesTech) return;
+
+        // Filter by search query (searches in plant name, subestaciones, propietarios, equipos)
+        if (term) {
+          const searchable = [
+            plant.nombre,
+            plant.se_primaria,
+            plant.propietario_primario,
+            plant.equipos_primarios,
+            plant.se_secundaria,
+            plant.propietario_secundario,
+            plant.equipos_secundarios,
+            plant.tipo_sscc
+          ].join(' ').toLowerCase();
+
+          if (!searchable.includes(term)) return;
+        }
+
+        filteredIndices.push(index);
+      });
+
+      // Update counter
+      document.getElementById('resultsCount').innerText = `Mostrando ${filteredIndices.length} de ${PLANTS_DATA.length} activos`;
+
+      // Render HTML
+      if (filteredIndices.length === 0) {
+        container.innerHTML = `
+          <div class="py-12 text-center text-slate-400 dark:text-slate-500">
+            <i data-lucide="search-x" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+            <p class="text-sm font-medium">No se encontraron plantas</p>
+            <p class="text-xs mt-1">Intenta con otro término o limpia los filtros</p>
+          </div>
+        `;
+        if (window.lucide) lucide.createIcons();
+        return;
+      }
+
+      let html = '';
+      filteredIndices.forEach((dataIndex) => {
+        const plant = PLANTS_DATA[dataIndex];
+        const tech = getTech(plant);
+        const mw = extractMW(plant.nombre);
+        const isSelected = dataIndex === currentPlantIndex;
+
+        // Custom active styling based on technology
+        let activeClass = '';
+        let dotColor = tech.color;
+
+        if (isSelected) {
+          activeClass = `bg-slate-200/80 dark:bg-slate-800 text-slate-900 dark:text-white font-semibold shadow-sm border-l-4`;
+        } else {
+          activeClass = `hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 border-l-4 border-transparent`;
+        }
+
+        html += `
+          <button 
+            type="button"
+            onclick="selectPlant(${dataIndex})"
+            style="${isSelected ? `border-left-color: ${tech.color};` : ''}"
+            class="w-full text-left p-2.5 rounded-lg transition-all group flex flex-col gap-1 ${activeClass}"
+          >
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2 min-w-0">
+                <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${tech.color}"></span>
+                <span class="truncate text-xs font-bold ${isSelected ? 'text-slate-900 dark:text-white' : 'text-slate-800 dark:text-slate-200'}">
+                  ${plant.nombre}
+                </span>
+              </div>
+              <span class="text-[11px] font-mono font-bold shrink-0 px-1.5 py-0.2 rounded bg-slate-200/80 dark:bg-slate-700/80 text-slate-700 dark:text-slate-300">
+                ${mw}
+              </span>
+            </div>
+            
+            <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pl-4.5">
+              <span class="truncate">
+                ${plant.se_primaria} &rarr; ${plant.se_secundaria}
+              </span>
+              ${plant.tipo_sscc ? `<span class="text-[10px] font-mono px-1 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">${plant.tipo_sscc}</span>` : ''}
+            </div>
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // Select and display a plant
+    function selectPlant(index) {
+      if (index < 0 || index >= PLANTS_DATA.length) return;
+      currentPlantIndex = index;
+      const plant = PLANTS_DATA[index];
+      const tech = getTech(plant);
+      const mw = extractMW(plant.nombre);
+
+      // 1. DYNAMIC TOP BANNER
+      const banner = document.getElementById('dynamicBanner');
+      banner.style.backgroundColor = tech.color;
+
+      // Update Plant Name
+      document.getElementById('bannerPlantName').innerText = plant.nombre;
+      
+      // Update Badges
+      document.getElementById('bannerTechText').innerText = tech.name;
+      document.getElementById('bannerCapacityText').innerText = mw;
+      document.getElementById('bannerOwnerText').innerText = plant.propietario_primario || 'Enel Green Power';
+      document.getElementById('bannerSePrimariaQuick').innerText = 'S/E ' + (plant.se_primaria || 'N/A');
+      document.getElementById('bannerSeSecundariaQuick').innerText = 'S/E ' + (plant.se_secundaria || 'N/A');
+
+      // Small badge icon
+      document.getElementById('badgeIconContainer').innerHTML = `
+        <i data-lucide="${tech.iconName}" class="w-3.5 h-3.5"></i>
+      `;
+
+      // Big Tech SVG Icon (Dynamic: Sun, Wind, Battery)
+      document.getElementById('techIconContainer').innerHTML = tech.svgIcon;
+
+      // 2. PRIMARY SUBSTATION (S/E PRIMARIA)
+      document.getElementById('lblSEPrimaria').innerText = plant.se_primaria || 'No registra';
+      document.getElementById('lblPropietarioPrimario').innerText = plant.propietario_primario || 'No registra';
+      document.getElementById('lblEquiposPrimarios').innerText = plant.equipos_primarios || 'No registra';
+      
+      // Badge EGP vs Tercero
+      const isPrimEgp = (plant.propietario_primario || '').toLowerCase().includes('enel');
+      const badgePrim = document.getElementById('badgePropietarioPrimario');
+      if (isPrimEgp) {
+        badgePrim.innerText = 'Enel Green Power';
+        badgePrim.className = 'text-[11px] px-2 py-0.5 rounded font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800';
+      } else {
+        badgePrim.innerText = plant.propietario_primario || 'Tercero';
+        badgePrim.className = 'text-[11px] px-2 py-0.5 rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300';
+      }
+
+      // Render individual interactive equipment tags for S/E Primaria
+      renderEquipmentTags('equiposPrimariosTags', plant.equipos_primarios);
+
+      // 3. SECONDARY SUBSTATION (S/E SECUNDARIA)
+      document.getElementById('lblSESecundaria').innerText = plant.se_secundaria || 'No registra';
+      document.getElementById('lblPropietarioSecundario').innerText = plant.propietario_secundario || 'No registra';
+      document.getElementById('lblEquiposSecundarios').innerText = plant.equipos_secundarios || 'No registra';
+
+      const isSecEgp = (plant.propietario_secundario || '').toLowerCase().includes('enel');
+      const badgeSec = document.getElementById('badgePropietarioSecundario');
+      if (isSecEgp) {
+        badgeSec.innerText = 'Enel Green Power';
+        badgeSec.className = 'text-[11px] px-2 py-0.5 rounded font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800';
+      } else {
+        badgeSec.innerText = plant.propietario_secundario || 'Tercero';
+        badgeSec.className = 'text-[11px] px-2 py-0.5 rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300';
+      }
+
+      // Render individual interactive equipment tags for S/E Secundaria
+      renderEquipmentTags('equiposSecundariosTags', plant.equipos_secundarios);
+
+      // 4. TOPOLOGY FLOW DIAGRAM UPDATE
+      document.getElementById('diagramPlantNode').innerText = plant.nombre.split('[')[0].trim();
+      document.getElementById('diagramMwNode').innerText = mw;
+      document.getElementById('diagramSePrimariaNode').innerText = plant.se_primaria || '-';
+      document.getElementById('diagramEqPrimariaNode').innerText = plant.equipos_primarios || '-';
+      document.getElementById('diagramSeSecundariaNode').innerText = plant.se_secundaria || '-';
+      document.getElementById('diagramEqSecundariaNode').innerText = plant.equipos_secundarios || '-';
+
+      // 5. SERVICIOS COMPLEMENTARIOS (SSCC) LOWER BLOCK
+      // Mandatory requirement: "Tipo SSCC: [valor]" (mostrar "No registra" si está vacío)
+      const ssccLabel = document.getElementById('lblTipoSSCC');
+      const ssccBadge = document.getElementById('badgeSSCCStatus');
+      const ssccDesc = document.getElementById('ssccDescriptionText');
+
+      if (plant.tipo_sscc && plant.tipo_sscc.trim() !== "") {
+        const val = plant.tipo_sscc.trim();
+        ssccLabel.innerText = `Tipo SSCC: ${val}`;
+        
+        let desc = '';
+        if (val.includes('CPF') && val.includes('CSF')) {
+          desc = 'Regulación de Frecuencia: CPF (Control Primario de Frecuencia) y CSF (Control Secundario de Frecuencia CEN).';
+        } else if (val.includes('CPF')) {
+          desc = 'Regulación de Frecuencia: Habilitada para Control Primario de Frecuencia (CPF).';
+        } else if (val.includes('CTF')) {
+          desc = 'Regulación de Tensión y Frecuencia: Control de Tensión y Frecuencia (CTF) según NTSyCS.';
+        } else {
+          desc = `Servicio Complementario activo: ${val}`;
+        }
+
+        ssccBadge.innerText = 'Habilitado CEN';
+        ssccBadge.className = 'text-xs px-2.5 py-0.5 rounded-full font-bold bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 border border-amber-300 dark:border-amber-800';
+        ssccDesc.innerText = desc;
+      } else {
+        ssccLabel.innerText = 'Tipo SSCC: No registra';
+        ssccBadge.innerText = 'No registra';
+        ssccBadge.className = 'text-xs px-2.5 py-0.5 rounded-full font-medium bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700';
+        ssccDesc.innerText = 'Esta central no cuenta con servicios complementarios registrados en la base operacional.';
+      }
+
+      // Refresh list to update active highlight
+      filterAndRenderList();
+
+      // Auto-close sidebar drawer on mobile screens so user sees details immediately
+      if (window.innerWidth < 1024) {
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (sidebar && !sidebar.classList.contains('-translate-x-full')) {
+          sidebar.classList.add('-translate-x-full');
+          backdrop.classList.add('hidden');
+        }
+      }
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    }
+
+    // Break equipment string into clickable copyable tags
+    function renderEquipmentTags(containerId, rawEquipos) {
+      const container = document.getElementById(containerId);
+      if (!rawEquipos || rawEquipos === 'No registra') {
+        container.innerHTML = '';
+        return;
+      }
+
+      // Split by hyphen or comma while preserving bracketed blocks
+      const items = rawEquipos.split(/ - | \/ |;|,/).map(s => s.trim()).filter(Boolean);
+      let html = '';
+      items.forEach(eq => {
+        html += `
+          <button 
+            type="button"
+            onclick="copySnippet('${eq.replace(/'/g, "\\'")}')" 
+            title="Click para copiar equipo '${eq}'" 
+            class="text-[11px] font-mono px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-600 transition-colors flex items-center gap-1 shadow-2xs group"
+          >
+            <span>${eq}</span>
+            <i data-lucide="copy" class="w-2.5 h-2.5 opacity-40 group-hover:opacity-100"></i>
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    // -------------------------------------------------------------------------
+    // 4. SEARCH & FILTER INTERACTION
+    // -------------------------------------------------------------------------
+    function handleSearch(val) {
+      currentSearchTerm = val;
+      const clearBtn = document.getElementById('clearSearchBtn');
+      if (val) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+      filterAndRenderList();
+
+      // If current selection is in filtered results, keep it; otherwise select first
+      if (filteredIndices.length > 0 && !filteredIndices.includes(currentPlantIndex)) {
+        selectPlant(filteredIndices[0]);
+      }
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('searchInput');
+      input.value = '';
+      handleSearch('');
+      input.focus();
+    }
+
+    function setTechFilter(tech) {
+      selectedTechFilter = tech;
+
+      // Update button styling
+      document.querySelectorAll('.filter-pill').forEach(btn => {
+        btn.classList.remove('bg-slate-900', 'text-white', 'dark:bg-white', 'dark:text-slate-900', 'shadow-sm', 'font-semibold');
+        btn.classList.add('text-slate-600', 'dark:text-slate-300', 'font-medium');
+      });
+
+      const activeBtn = document.getElementById(`filter-${tech}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-slate-900', 'text-white', 'dark:bg-white', 'dark:text-slate-900', 'shadow-sm', 'font-semibold');
+        activeBtn.classList.remove('text-slate-600', 'dark:text-slate-300', 'font-medium');
+      }
+
+      filterAndRenderList();
+
+      if (filteredIndices.length > 0 && !filteredIndices.includes(currentPlantIndex)) {
+        selectPlant(filteredIndices[0]);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 5. CLIPBOARD COPY UTILITIES
+    // -------------------------------------------------------------------------
+    function showToast(message) {
+      const toast = document.getElementById('toastNotification');
+      const text = document.getElementById('toastMessage');
+      text.innerText = message;
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2400);
+    }
+
+    function copySnippet(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`Equipo copiado: ${text}`);
+      }).catch(() => {
+        showToast(`Copiado: ${text}`);
+      });
+    }
+
+    function copyField(elementId, label) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      const val = el.innerText.trim();
+      navigator.clipboard.writeText(val).then(() => {
+        showToast(`${label} copiado`);
+      });
+    }
+
+    function copyOperationalSummary() {
+      const p = PLANTS_DATA[currentPlantIndex];
+      const text = [
+        `[CENTRO DE CONTROL EGP - TURNO AA]`,
+        `PLANTA: ${p.nombre}`,
+        `TECNOLOGÍA: ${p.tecnologia}`,
+        `S/E PRIMARIA: ${p.se_primaria} | PROPIETARIO: ${p.propietario_primario}`,
+        `EQUIPOS EGP: ${p.equipos_primarios}`,
+        `S/E SECUNDARIA: ${p.se_secundaria} | PROPIETARIO: ${p.propietario_secundario}`,
+        `EQUIPOS SECUNDARIOS: ${p.equipos_secundarios}`,
+        `SERVICIOS COMPLEMENTARIOS: ${p.tipo_sscc ? p.tipo_sscc : 'No registra'}`
+      ].join('\n');
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`Ficha completa copiada`);
+      });
+    }
+
+    // -------------------------------------------------------------------------
+    // 6. KEYBOARD NAVIGATION & SHORTCUTS
+    // -------------------------------------------------------------------------
+    function setupKeyboardNavigation() {
+      window.addEventListener('keydown', (e) => {
+        // Focus search on '/'
+        if (e.key === '/' && document.activeElement !== document.getElementById('searchInput')) {
+          e.preventDefault();
+          document.getElementById('searchInput').focus();
+          return;
+        }
+
+        // Navigate with ArrowUp / ArrowDown
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          if (document.activeElement === document.getElementById('searchInput') && filteredIndices.length > 0) {
+            // allow moving to list
+          }
+          if (filteredIndices.length === 0) return;
+          e.preventDefault();
+          const currentPos = filteredIndices.indexOf(currentPlantIndex);
+          if (e.key === 'ArrowDown') {
+            const nextPos = (currentPos + 1) % filteredIndices.length;
+            selectPlant(filteredIndices[nextPos]);
+          } else if (e.key === 'ArrowUp') {
+            const prevPos = (currentPos - 1 + filteredIndices.length) % filteredIndices.length;
+            selectPlant(filteredIndices[prevPos]);
+          }
+        }
+      });
+    }
+
+    // -------------------------------------------------------------------------
+    // 7. THEME & LIVE CLOCK
+    // -------------------------------------------------------------------------
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('egp_theme', isDark ? 'dark' : 'light');
+      updateThemeIcon(isDark);
+    }
+
+    function updateThemeIcon(isDark) {
+      const icon = document.getElementById('themeIcon');
+      if (icon) {
+        icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+
+    // Check system or saved preference
+    const savedTheme = localStorage.getItem('egp_theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      updateThemeIcon(true);
+    } else {
+      document.documentElement.classList.remove('dark');
+      updateThemeIcon(false);
+    }
+
+    function startClock() {
+      const clock = document.getElementById('liveClock');
+      function update() {
+        const now = new Date();
+        clock.innerText = now.toLocaleTimeString('es-CL', { hour12: false });
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    // Mobile sidebar drawer
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      sidebar.classList.toggle('-translate-x-full');
+      backdrop.classList.toggle('hidden');
+    }
+
+    // -------------------------------------------------------------------------
+    // 8. MOBILE SHARING FUNCTIONS
+    // -------------------------------------------------------------------------
+    function openShareModal() {
+      let url = window.location.href;
+      if (url.startsWith('file://')) {
+        // When opened directly as a file, provide local network server IP address
+        url = 'http://10.112.158.202:8080';
+      }
+      
+      const modal = document.getElementById('shareModal');
+      const input = document.getElementById('shareUrlInput');
+      const qrImg = document.getElementById('modalQrCodeImg');
+      
+      input.value = url;
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=${encodeURIComponent(url)}`;
+      
+      modal.classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeShareModal() {
+      document.getElementById('shareModal').classList.add('hidden');
+    }
+
+    function copyShareUrl() {
+      const input = document.getElementById('shareUrlInput');
+      navigator.clipboard.writeText(input.value).then(() => {
+        showToast('Enlace copiado al portapapeles');
+      });
+    }
+
+    function shareViaWhatsApp() {
+      const input = document.getElementById('shareUrlInput');
+      const text = encodeURIComponent(`Dashboard Operacional SSEE - Plantas EGP ERNC: ${input.value}`);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+
+    // Close modal on backdrop click or Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeShareModal();
+    });
+    document.getElementById('shareModal').addEventListener('click', (e) => {
+      if (e.target.id === 'shareModal') closeShareModal();
+    });
+
+    // Initialize when DOM is ready
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
