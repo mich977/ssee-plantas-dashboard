@@ -355,6 +355,16 @@
             <!-- Right Banner: Dynamic Big Technology SVG Icon & Action Tools -->
             <div class="flex items-center gap-4 z-10 self-end md:self-center shrink-0">
               
+              <!-- Ver Plano Unilineal Button -->
+              <button 
+                onclick="openDiagramModal()" 
+                class="px-3.5 py-2.5 rounded-xl bg-white/20 hover:bg-white/30 active:bg-white/40 backdrop-blur-md text-white text-xs font-semibold flex items-center gap-2 border border-white/30 shadow-sm transition-all cursor-pointer"
+                title="Abrir diagrama unilineal y esquema eléctrico"
+              >
+                <i data-lucide="file-image" class="w-4 h-4"></i>
+                <span class="hidden sm:inline">Ver Plano</span>
+              </button>
+
               <!-- Copy Logbook Summary Button -->
               <button 
                 onclick="copyOperationalSummary()" 
@@ -563,7 +573,13 @@
                 <i data-lucide="git-commit" class="w-4 h-4 text-blue-500"></i>
                 Esquema Operacional de Enlace
               </span>
-              <span class="text-[11px] text-slate-400">Flujo de Generación &rarr; Inyección SEN</span>
+              <button 
+                onclick="openDiagramModal()" 
+                class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold flex items-center gap-1 transition-colors hover:underline"
+              >
+                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                Ver plano unilineal completo
+              </button>
             </div>
 
             <!-- Flow Cards Diagram -->
@@ -804,6 +820,75 @@
   </div>
 
   <!-- ========================================================================= -->
+  <!-- MODAL: VISOR DE PLANO UNILINEAL (PANTALLA COMPLETA & ZOOM)               -->
+  <!-- ========================================================================= -->
+  <div id="diagramModal" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-md hidden transition-opacity">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-6xl h-[94vh] flex flex-col shadow-2xl overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="p-3 sm:p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/90 flex items-center justify-between gap-3 shrink-0">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold shrink-0">
+            <i data-lucide="file-image" class="w-5 h-5"></i>
+          </div>
+          <div class="min-w-0">
+            <h3 id="diagramModalTitle" class="text-sm sm:text-base font-bold text-slate-900 dark:text-white truncate">
+              Plano Unilineal - PFV Azabache
+            </h3>
+            <p id="diagramModalSubtitle" class="text-xs text-slate-500 dark:text-slate-400 truncate">
+              Esquema Operacional S/E y Equipos
+            </p>
+          </div>
+        </div>
+
+        <!-- Controls Toolbar -->
+        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <!-- Zoom Controls -->
+          <div class="flex items-center bg-slate-200/80 dark:bg-slate-800 rounded-lg p-0.5 border border-slate-300 dark:border-slate-700">
+            <button onclick="zoomDiagram(-0.2)" title="Alejar (-)" class="p-1.5 rounded-md hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors">
+              <i data-lucide="zoom-out" class="w-4 h-4"></i>
+            </button>
+            <span id="diagramZoomLevel" class="text-[11px] font-mono px-2 font-semibold text-slate-700 dark:text-slate-300 select-none">100%</span>
+            <button onclick="zoomDiagram(0.2)" title="Acercar (+)" class="p-1.5 rounded-md hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors">
+              <i data-lucide="zoom-in" class="w-4 h-4"></i>
+            </button>
+            <button onclick="resetDiagramZoom()" title="Restablecer tamaño (1:1)" class="p-1.5 rounded-md hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Open in new tab -->
+          <a id="diagramOpenTabBtn" href="#" target="_blank" title="Abrir imagen en nueva pestaña" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors hidden sm:inline-flex">
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+          </a>
+
+          <!-- Close Modal -->
+          <button onclick="closeDiagramModal()" title="Cerrar (Esc)" class="p-2 rounded-lg bg-slate-100 hover:bg-rose-100 hover:text-rose-600 dark:bg-slate-800 dark:hover:bg-rose-950 dark:hover:text-rose-400 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Canvas / Viewport Container -->
+      <div id="diagramViewport" class="flex-1 overflow-auto bg-slate-950/95 relative flex items-center justify-center p-4 cursor-grab active:cursor-grabbing select-none">
+        <div id="diagramWrapper" class="transition-transform duration-150 ease-out origin-center">
+          <img id="diagramImage" src="" alt="Diagrama Unilineal" class="max-w-full max-h-[78vh] w-auto h-auto object-contain rounded-lg shadow-2xl bg-white border border-slate-200">
+        </div>
+      </div>
+
+      <!-- Footer Info -->
+      <div class="px-4 py-2 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/90 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 shrink-0">
+        <span class="flex items-center gap-1.5">
+          <i data-lucide="info" class="w-3.5 h-3.5 text-blue-500"></i>
+          En celular puedes pellizcar con dos dedos o usar los botones de zoom para ver números de interruptores.
+        </span>
+        <span id="diagramFileName" class="font-mono text-slate-400 hidden sm:inline">planos/...</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
   <!-- TOAST NOTIFICATION FOR COPY TO CLIPBOARD                                  -->
   <!-- ========================================================================= -->
   <div id="toastNotification" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
@@ -830,7 +915,8 @@
         se_secundaria: "Calama nueva",
         propietario_secundario: "Acciona",
         equipos_secundarios: "H3",
-        tipo_sscc: ""
+        tipo_sscc: "",
+        plano: "planos/Valle de los vientos.PNG"
       },
       {
         tecnologia: "Solar",
@@ -841,7 +927,8 @@
         se_secundaria: "Encuentro",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J16 [EGP]",
-        tipo_sscc: ""
+        tipo_sscc: "",
+        plano: "planos/Finis Terrae.PNG"
       },
       {
         tecnologia: "Solar",
@@ -852,7 +939,8 @@
         se_secundaria: "Arena",
         propietario_secundario: "EnorChile",
         equipos_secundarios: "J2",
-        tipo_sscc: ""
+        tipo_sscc: "",
+        plano: "planos/Lalackama.PNG"
       },
       {
         tecnologia: "Solar",
@@ -863,7 +951,8 @@
         se_secundaria: "Centinela",
         propietario_secundario: "Redinter",
         equipos_secundarios: "J10 - J11 - J12 [INT 1/2]",
-        tipo_sscc: "CPF"
+        tipo_sscc: "CPF",
+        plano: "planos/Las Salinas.PNG"
       },
       {
         tecnologia: "Solar",
@@ -874,7 +963,8 @@
         se_secundaria: "Andes",
         propietario_secundario: "AES Andes",
         equipos_secundarios: "J12 [EGP]",
-        tipo_sscc: ""
+        tipo_sscc: "",
+        plano: "planos/Sol de Lila.PNG"
       },
       {
         tecnologia: "Solar",
@@ -885,7 +975,8 @@
         se_secundaria: "Miraje",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J1 - J2 - J3 [INT 1/2]",
-        tipo_sscc: ""
+        tipo_sscc: "",
+        plano: "planos/Valle del sol.PNG"
       },
       {
         tecnologia: "Solar",
@@ -896,7 +987,8 @@
         se_secundaria: "Illapa",
         propietario_secundario: "Celeo Redes",
         equipos_secundarios: "J15 [EGP] - J14 -J13 [Colbún] [INT 1/2]",
-        tipo_sscc: ""
+        tipo_sscc: "",
+        plano: "planos/Guianchoi.PNG"
       },
       {
         tecnologia: "Solar",
@@ -907,7 +999,8 @@
         se_secundaria: "Carrera Pinto",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J17 - J18 [EGP]",
-        tipo_sscc: ""
+        tipo_sscc: "",
+        plano: "planos/Campos del Sol.PNG"
       },
       {
         tecnologia: "Solar",
@@ -918,7 +1011,8 @@
         se_secundaria: "Diego de Almagro",
         propietario_secundario: "Transelec",
         equipos_secundarios: "H9",
-        tipo_sscc: ""
+        tipo_sscc: "",
+        plano: "planos/Chañares.PNG"
       },
       {
         tecnologia: "Solar",
@@ -929,7 +1023,8 @@
         se_secundaria: "Línea Pajonales",
         propietario_secundario: "Transelec",
         equipos_secundarios: "E1",
-        tipo_sscc: ""
+        tipo_sscc: "",
+        plano: "planos/La Silla.PNG"
       },
       {
         tecnologia: "Solar",
@@ -940,7 +1035,8 @@
         se_secundaria: "El Manzano",
         propietario_secundario: "STS [Saesa]",
         equipos_secundarios: "F1 - FT5 - JT5 [EGP]",
-        tipo_sscc: ""
+        tipo_sscc: "",
+        plano: "planos/El Manzano.PNG"
       },
       {
         tecnologia: "Solar",
@@ -951,7 +1047,8 @@
         se_secundaria: "Punta Peuco [Polpaico]",
         propietario_secundario: "Punta Peuco (Polpaico)",
         equipos_secundarios: "H2 [EGP]",
-        tipo_sscc: "CPF"
+        tipo_sscc: "CPF",
+        plano: "planos/Don Humberto.PNG"
       },
       {
         tecnologia: "Wind",
@@ -962,7 +1059,8 @@
         se_secundaria: "Calama nueva",
         propietario_secundario: "CGE Transmisión",
         equipos_secundarios: "H2",
-        tipo_sscc: "CTF"
+        tipo_sscc: "CTF",
+        plano: "planos/Valle de los vientos.PNG"
       },
       {
         tecnologia: "Wind",
@@ -973,7 +1071,8 @@
         se_secundaria: "Sierra Gorda Este",
         propietario_secundario: "EnorChile [MSGE]",
         equipos_secundarios: "J3 [EGP]",
-        tipo_sscc: "CTF"
+        tipo_sscc: "CTF",
+        plano: "planos/Sierra Gorda.PNG"
       },
       {
         tecnologia: "Wind",
@@ -984,7 +1083,8 @@
         se_secundaria: "Jadresic",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J8 - J9 - J7 [INT 1/2]",
-        tipo_sscc: "CTF"
+        tipo_sscc: "CTF",
+        plano: "planos/Taltal.PNG"
       },
       {
         tecnologia: "Wind",
@@ -995,7 +1095,8 @@
         se_secundaria: "Las Palmas",
         propietario_secundario: "Transelec",
         equipos_secundarios: "JG(JT1) [EGP]",
-        tipo_sscc: "CTF"
+        tipo_sscc: "CTF",
+        plano: "planos/Canela.PNG"
       },
       {
         tecnologia: "Wind",
@@ -1006,7 +1107,8 @@
         se_secundaria: "Las Palmas",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J2 [EGP]",
-        tipo_sscc: "CTF"
+        tipo_sscc: "CTF",
+        plano: "planos/Canela II.PNG"
       },
       {
         tecnologia: "Wind",
@@ -1017,7 +1119,8 @@
         se_secundaria: "La Cebada",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J4",
-        tipo_sscc: "CTF"
+        tipo_sscc: "CTF",
+        plano: "planos/Talinay oriente.PNG"
       },
       {
         tecnologia: "Wind",
@@ -1028,7 +1131,8 @@
         se_secundaria: "La Cebada",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J4",
-        tipo_sscc: "CTF"
+        tipo_sscc: "CTF",
+        plano: "planos/Talinay poniente.PNG"
       },
       {
         tecnologia: "Wind",
@@ -1039,7 +1143,8 @@
         se_secundaria: "Renaico",
         propietario_secundario: "Enel Green Power",
         equipos_secundarios: "JL2",
-        tipo_sscc: ""
+        tipo_sscc: "",
+        plano: "planos/La Cabaña.PNG"
       },
       {
         tecnologia: "Wind",
@@ -1050,7 +1155,8 @@
         se_secundaria: "Los Angeles & Negrete",
         propietario_secundario: "CGE Transmisión",
         equipos_secundarios: "B4 & B1",
-        tipo_sscc: "CTF"
+        tipo_sscc: "CTF",
+        plano: "planos/Los buenos aires.PNG"
       },
       {
         tecnologia: "Wind",
@@ -1061,7 +1167,8 @@
         se_secundaria: "Mulchén",
         propietario_secundario: "Celeo Redes",
         equipos_secundarios: "J7 [EGP]",
-        tipo_sscc: "CTF"
+        tipo_sscc: "CTF",
+        plano: "planos/Renaico I.PNG"
       },
       {
         tecnologia: "Wind",
@@ -1072,7 +1179,8 @@
         se_secundaria: "Mulchén",
         propietario_secundario: "Celeo Redes",
         equipos_secundarios: "J7 [EGP]",
-        tipo_sscc: ""
+        tipo_sscc: "",
+        plano: "planos/Renaico II.PNG"
       },
       {
         tecnologia: "BESS",
@@ -1083,7 +1191,8 @@
         se_secundaria: "Renaico",
         propietario_secundario: "Enel Green Power",
         equipos_secundarios: "JL2",
-        tipo_sscc: "CPF - CSF"
+        tipo_sscc: "CPF - CSF",
+        plano: "planos/La Cabaña.PNG"
       },
       {
         tecnologia: "BESS",
@@ -1094,7 +1203,8 @@
         se_secundaria: "Punta Peuco [Polpaico]",
         propietario_secundario: "Polpaico",
         equipos_secundarios: "H2",
-        tipo_sscc: "CPF - CSF"
+        tipo_sscc: "CPF - CSF",
+        plano: "planos/Bess Don Humberto.PNG"
       },
       {
         tecnologia: "BESS",
@@ -1105,7 +1215,8 @@
         se_secundaria: "El Manzano",
         propietario_secundario: "STS [Saesa]",
         equipos_secundarios: "FT5 - JT5",
-        tipo_sscc: "CPF - CSF"
+        tipo_sscc: "CPF - CSF",
+        plano: "planos/Bess El Manzano.PNG"
       }
     ];
 
@@ -1687,12 +1798,80 @@
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     }
 
-    // Close modal on backdrop click or Escape key
+    // -------------------------------------------------------------------------
+    // 9. DIAGRAM VIEWER FUNCTIONS (UNILINEALES)
+    // -------------------------------------------------------------------------
+    let currentDiagramZoom = 1;
+
+    function openDiagramModal() {
+      const plant = PLANTS_DATA[currentPlantIndex];
+      if (!plant || !plant.plano) {
+        showToast("No hay plano disponible para esta central");
+        return;
+      }
+
+      const modal = document.getElementById('diagramModal');
+      const title = document.getElementById('diagramModalTitle');
+      const subtitle = document.getElementById('diagramModalSubtitle');
+      const img = document.getElementById('diagramImage');
+      const openBtn = document.getElementById('diagramOpenTabBtn');
+      const fname = document.getElementById('diagramFileName');
+
+      title.innerText = `Plano Unilineal - ${plant.nombre}`;
+      subtitle.innerText = `S/E Primaria: ${plant.se_primaria || '-'} | S/E Secundaria: ${plant.se_secundaria || '-'}`;
+      img.src = plant.plano;
+      openBtn.href = plant.plano;
+      fname.innerText = plant.plano;
+
+      resetDiagramZoom();
+
+      modal.classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeDiagramModal() {
+      const modal = document.getElementById('diagramModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function zoomDiagram(delta) {
+      currentDiagramZoom = Math.min(Math.max(0.5, currentDiagramZoom + delta), 3.0);
+      updateDiagramTransform();
+    }
+
+    function resetDiagramZoom() {
+      currentDiagramZoom = 1;
+      updateDiagramTransform();
+    }
+
+    function updateDiagramTransform() {
+      const wrapper = document.getElementById('diagramWrapper');
+      const label = document.getElementById('diagramZoomLevel');
+      if (wrapper) {
+        wrapper.style.transform = `scale(${currentDiagramZoom})`;
+      }
+      if (label) {
+        label.innerText = `${Math.round(currentDiagramZoom * 100)}%`;
+      }
+    }
+
+    // Close modals on backdrop click or Escape key
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeShareModal();
+      if (e.key === 'Escape') {
+        closeShareModal();
+        closeDiagramModal();
+      }
+      const diagModal = document.getElementById('diagramModal');
+      if (diagModal && !diagModal.classList.contains('hidden')) {
+        if (e.key === '+' || e.key === '=') zoomDiagram(0.2);
+        if (e.key === '-' || e.key === '_') zoomDiagram(-0.2);
+      }
     });
     document.getElementById('shareModal').addEventListener('click', (e) => {
       if (e.target.id === 'shareModal') closeShareModal();
+    });
+    document.getElementById('diagramModal').addEventListener('click', (e) => {
+      if (e.target.id === 'diagramModal') closeDiagramModal();
     });
 
     // Initialize when DOM is ready
