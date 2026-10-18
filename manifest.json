@@ -1,7 +1,7 @@
 {
-  "name": "SSEE - PLANTAS EGP - ERNC",
-  "short_name": "SSEE EGP",
-  "description": "Dashboard Operacional de Subestaciones y Centrales ERNC - Centro de Control Enel Green Power",
+  "name": "SSEE - PLANTAS ERNC",
+  "short_name": "SSEE ERNC",
+  "description": "Dashboard Operacional de Subestaciones y Centrales ERNC - Centro de Control",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

@@ -1,5 +1,5 @@
-// Service Worker - SSEE Plantas EGP ERNC
-const CACHE_NAME = 'ssee-egp-v2';
+// Service Worker - SSEE Plantas ERNC
+const CACHE_NAME = 'ssee-ernc-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
