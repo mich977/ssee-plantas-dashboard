@@ -13,6 +13,13 @@
   <meta name="theme-color" content="#0f172a">
   <meta name="mobile-web-app-capable" content="yes">
 
+  <!-- Web App Manifest & App Icons (Subestación Eléctrica) -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -156,6 +163,12 @@
             2.85 GW Totales
           </div>
         </div>
+
+        <!-- Instalar Aplicación (PWA) -->
+        <button id="installAppBtn" onclick="triggerInstallApp()" title="Instalar como aplicación en este PC o Celular" class="px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/70 dark:hover:bg-emerald-900/80 text-emerald-700 dark:text-emerald-300 font-semibold text-xs flex items-center gap-1.5 transition-colors border border-emerald-300 dark:border-emerald-800 shadow-2xs">
+          <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+          <span class="hidden sm:inline">Instalar App</span>
+        </button>
 
         <!-- Ver en Celular / Compartir -->
         <button id="shareMobileBtn" onclick="openShareModal()" title="Compartir y ver en celular" class="px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/70 dark:hover:bg-blue-900/80 text-blue-700 dark:text-blue-300 font-semibold text-xs flex items-center gap-1.5 transition-colors border border-blue-200 dark:border-blue-800 shadow-2xs">
@@ -709,16 +722,14 @@
       
       <!-- Modal Header -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
-        <div class="flex items-center gap-2.5">
-          <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">
-            <i data-lucide="smartphone" class="w-5 h-5"></i>
-          </div>
+        <div class="flex items-center gap-3">
+          <img src="icons/icon-192.png" alt="Icono SSEE" class="w-11 h-11 rounded-xl shadow-md border border-slate-300 dark:border-slate-700 shrink-0">
           <div>
-            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
-              Ver en Celular (Android / iPhone)
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              Instalar App / Ver en Celular
             </h3>
             <p class="text-xs text-slate-500 dark:text-slate-400">
-              Accede al dashboard operacional desde tu teléfono móvil
+              Instala la aplicación en tu PC o accede desde Android e iPhone
             </p>
           </div>
         </div>
@@ -1873,6 +1884,50 @@
     document.getElementById('diagramModal').addEventListener('click', (e) => {
       if (e.target.id === 'diagramModal') closeDiagramModal();
     });
+
+    // -------------------------------------------------------------------------
+    // 10. PWA INSTALLATION & SERVICE WORKER
+    // -------------------------------------------------------------------------
+    let deferredInstallPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      const btn = document.getElementById('installAppBtn');
+      if (btn) btn.classList.remove('hidden');
+    });
+
+    function triggerInstallApp() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            showToast('¡Instalando aplicación SSEE EGP!');
+            const btn = document.getElementById('installAppBtn');
+            if (btn) btn.classList.add('hidden');
+          }
+          deferredInstallPrompt = null;
+        });
+      } else {
+        // If beforeinstallprompt is not supported or already installed, open installation guide modal
+        openShareModal();
+      }
+    }
+
+    window.addEventListener('appinstalled', () => {
+      showToast('Aplicación instalada exitosamente');
+      const btn = document.getElementById('installAppBtn');
+      if (btn) btn.classList.add('hidden');
+    });
+
+    // Register Service Worker for offline support and PWA validation
+    if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((reg) => console.log('SSEE Service Worker activo:', reg.scope))
+          .catch((err) => console.log('SW registration note:', err));
+      });
+    }
 
     // Initialize when DOM is ready
     window.addEventListener('DOMContentLoaded', initApp);
