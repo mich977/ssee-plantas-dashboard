@@ -478,6 +478,10 @@
                   <div id="equiposPrimariosTags" class="flex flex-wrap gap-1.5 mt-2.5">
                     <!-- Injected via JavaScript -->
                   </div>
+                  <!-- Substation Operational Condition / Note -->
+                  <div id="notaPrimariaContainer" class="mt-2.5 hidden">
+                    <!-- Injected via JavaScript -->
+                  </div>
                 </div>
 
               </div>
@@ -561,6 +565,10 @@
                   </div>
                   <!-- Parsed Interactive Tags Container -->
                   <div id="equiposSecundariosTags" class="flex flex-wrap gap-1.5 mt-2.5">
+                    <!-- Injected via JavaScript -->
+                  </div>
+                  <!-- Substation Operational Condition / Note -->
+                  <div id="notaSecundariaContainer" class="mt-2.5 hidden">
                     <!-- Injected via JavaScript -->
                   </div>
                 </div>
@@ -1012,7 +1020,9 @@
         se_secundaria: "Illapa",
         propietario_secundario: "Celeo Redes",
         equipos_secundarios: "J15 [EGP] - J14 -J13 [Colbún] [INT 1/2]",
-        tipo_sscc: "",
+        nota_se_secundaria: "J15 reconexión automática deshabilitada",
+        radh_secundaria: "J15",
+        tipo_sscc: "CPF",
         plano: "planos/Guianchoi.PNG"
       },
       {
@@ -1021,10 +1031,14 @@
         se_primaria: "Campos del sol",
         propietario_primario: "Enel Green Power",
         equipos_primarios: "FT1A - FT2A - FT1B - FT2B - JT1 - JT2 - J1",
+        nota_se_primaria: "J1 reconexión automática deshabilitada",
+        radh_primaria: "J1",
         se_secundaria: "Carrera Pinto",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J17 - J18 [EGP]",
-        tipo_sscc: "",
+        nota_se_secundaria: "J17/J18 reconexión automática deshabilitada",
+        radh_secundaria: "J17/J18",
+        tipo_sscc: "CPF",
         plano: "planos/Campos del Sol.PNG"
       },
       {
@@ -1072,7 +1086,7 @@
         se_secundaria: "Punta Peuco [Polpaico]",
         propietario_secundario: "Punta Peuco (Polpaico)",
         equipos_secundarios: "H2 [EGP]",
-        tipo_sscc: "CPF",
+        tipo_sscc: "CPF - CSF",
         plano: "planos/Don Humberto.PNG"
       },
       {
@@ -1093,9 +1107,13 @@
         se_primaria: "El Arriero",
         propietario_primario: "Enel Green Power",
         equipos_primarios: "ET1 - J1",
+        nota_se_primaria: "J1 reconexión automática deshabilitada",
+        radh_primaria: "J1",
         se_secundaria: "Sierra Gorda Este",
         propietario_secundario: "EnorChile [MSGE]",
         equipos_secundarios: "J3 [EGP]",
+        nota_se_secundaria: "J3 reconexión automática deshabilitada",
+        radh_secundaria: "J3",
         tipo_sscc: "CTF",
         plano: "planos/Sierra Gorda.PNG"
       },
@@ -1177,6 +1195,8 @@
         se_primaria: "Los Buenos Aires",
         propietario_primario: "Enel Green Power",
         equipos_primarios: "FT1 - BT1 - B1 - B2",
+        nota_se_primaria: "B1/B2 reconexión automática deshabilitada",
+        radh_primaria: "B1/B2",
         se_secundaria: "Los Angeles & Negrete",
         propietario_secundario: "CGE Transmisión",
         equipos_secundarios: "B4 & B1",
@@ -1189,9 +1209,13 @@
         se_primaria: "Renaico",
         propietario_primario: "Enel Green Power",
         equipos_primarios: "FT1 - JT1 - JL1",
+        nota_se_primaria: "JL reconexión automática deshabilitada",
+        radh_primaria: "JL",
         se_secundaria: "Mulchén",
         propietario_secundario: "Celeo Redes",
         equipos_secundarios: "J7 [EGP]",
+        nota_se_secundaria: "J7 reconexión automática deshabilitada",
+        radh_secundaria: "J7",
         tipo_sscc: "CTF",
         plano: "planos/Renaico I.PNG"
       },
@@ -1382,7 +1406,11 @@
             plant.se_secundaria,
             plant.propietario_secundario,
             plant.equipos_secundarios,
-            plant.tipo_sscc
+            plant.tipo_sscc,
+            plant.nota_se_primaria || '',
+            plant.nota_se_secundaria || '',
+            plant.radh_primaria || '',
+            plant.radh_secundaria || ''
           ].join(' ').toLowerCase();
 
           if (!searchable.includes(term)) return;
@@ -1424,6 +1452,18 @@
           activeClass = `hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 border-l-4 border-transparent`;
         }
 
+        const primRadh = plant.radh_primaria ? `
+          <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[9.5px] font-bold font-mono bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 shrink-0" title="S/E ${plant.se_primaria}: Reconexión automática deshabilitada (${plant.radh_primaria})">
+            ${plant.radh_primaria}
+          </span>
+        ` : '';
+
+        const secRadh = plant.radh_secundaria ? `
+          <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[9.5px] font-bold font-mono bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 shrink-0" title="S/E ${plant.se_secundaria}: Reconexión automática deshabilitada (${plant.radh_secundaria})">
+            ${plant.radh_secundaria}
+          </span>
+        ` : '';
+
         html += `
           <button 
             type="button"
@@ -1443,11 +1483,15 @@
               </span>
             </div>
             
-            <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pl-4.5">
-              <span class="truncate">
-                ${plant.se_primaria} &rarr; ${plant.se_secundaria}
-              </span>
-              ${plant.tipo_sscc ? `<span class="text-[10px] font-mono px-1 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">${plant.tipo_sscc}</span>` : ''}
+            <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pl-4.5 gap-1.5">
+              <div class="flex items-center gap-1 min-w-0 truncate">
+                <span class="truncate">${plant.se_primaria}</span>
+                ${primRadh}
+                <span class="text-slate-400 dark:text-slate-600 shrink-0">&rarr;</span>
+                <span class="truncate">${plant.se_secundaria}</span>
+                ${secRadh}
+              </div>
+              ${plant.tipo_sscc ? `<span class="text-[10px] font-mono px-1 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 shrink-0">${plant.tipo_sscc}</span>` : ''}
             </div>
           </button>
         `;
@@ -1506,6 +1550,22 @@
       // Render individual interactive equipment tags for S/E Primaria
       renderEquipmentTags('equiposPrimariosTags', plant.equipos_primarios);
 
+      // Render Substation Operational Note (S/E Primaria)
+      const notaPrimEl = document.getElementById('notaPrimariaContainer');
+      const textNotaPrim = plant.nota_se_primaria || (plant.radh_primaria ? `${plant.radh_primaria} reconexión automática deshabilitada` : '');
+
+      if (textNotaPrim && textNotaPrim.trim() !== '') {
+        notaPrimEl.innerHTML = `
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700/80 shadow-2xs">
+            <span>${textNotaPrim}</span>
+          </div>
+        `;
+        notaPrimEl.classList.remove('hidden');
+      } else {
+        notaPrimEl.innerHTML = '';
+        notaPrimEl.classList.add('hidden');
+      }
+
       // 3. SECONDARY SUBSTATION (S/E SECUNDARIA)
       document.getElementById('lblSESecundaria').innerText = plant.se_secundaria || 'No registra';
       document.getElementById('lblPropietarioSecundario').innerText = plant.propietario_secundario || 'No registra';
@@ -1523,6 +1583,22 @@
 
       // Render individual interactive equipment tags for S/E Secundaria
       renderEquipmentTags('equiposSecundariosTags', plant.equipos_secundarios);
+
+      // Render Substation Operational Note (S/E Secundaria) - Sin icono
+      const notaSecEl = document.getElementById('notaSecundariaContainer');
+      const textNotaSec = plant.nota_se_secundaria || (plant.radh_secundaria ? `${plant.radh_secundaria} reconexión automática deshabilitada` : '');
+
+      if (textNotaSec && textNotaSec.trim() !== '') {
+        notaSecEl.innerHTML = `
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700/80 shadow-2xs">
+            <span>${textNotaSec}</span>
+          </div>
+        `;
+        notaSecEl.classList.remove('hidden');
+      } else {
+        notaSecEl.innerHTML = '';
+        notaSecEl.classList.add('hidden');
+      }
 
       // 4. TOPOLOGY FLOW DIAGRAM UPDATE
       document.getElementById('diagramPlantNode').innerText = plant.nombre.split('[')[0].trim();
@@ -1543,8 +1619,10 @@
         ssccLabel.innerText = `Tipo SSCC: ${val}`;
         
         let desc = '';
-        if (val.includes('CPF') && val.includes('CSF')) {
-          desc = 'Regulación de Frecuencia: CPF (Control Primario de Frecuencia) y CSF (Control Secundario de Frecuencia CEN).';
+        if ((val.includes('CPF') && val.includes('CSF')) || (val.includes('CPF') && (val.includes('Secundario') || val.includes('AGC')))) {
+          desc = 'Regulación de Frecuencia: Habilitada para Control Primario (CPF) y Control Secundario de Frecuencia (CSF / AGC) CEN.';
+        } else if (val.includes('Secundario') || val.includes('AGC') || val.includes('CSF')) {
+          desc = 'Regulación de Frecuencia: Habilitada para Control Secundario de Frecuencia (CSF / AGC CEN).';
         } else if (val.includes('CPF')) {
           desc = 'Regulación de Frecuencia: Habilitada para Control Primario de Frecuencia (CPF).';
         } else if (val.includes('CTF')) {
