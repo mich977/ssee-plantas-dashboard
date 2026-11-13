@@ -345,18 +345,27 @@
               </div>
 
               <!-- Main Plant Title (Exact VBA Me.lblNombrePlanta.Caption) -->
-              <h2 id="bannerPlantName" class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight drop-shadow-sm text-white">
-                PFV - Azabache [59MW]
-              </h2>
+              <div class="flex flex-wrap items-center gap-2.5">
+                <h2 id="bannerPlantName" class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight drop-shadow-sm text-white">
+                  PFV - Azabache [59MW]
+                </h2>
+                <div id="bannerExtraBadges" class="flex flex-wrap items-center gap-2"></div>
+              </div>
 
               <!-- Operational Context Subtitle -->
-              <p id="bannerSubContext" class="text-white/85 text-xs sm:text-sm font-medium flex flex-wrap items-center gap-x-3 gap-y-1">
+              <div id="bannerSubContext" class="text-white/85 text-xs sm:text-sm font-medium flex flex-wrap items-start gap-x-2.5 gap-y-1">
                 <span>Interconexión SEN</span>
                 <span class="opacity-60">&bull;</span>
-                <span id="bannerSePrimariaQuick">S/E Chi Chiu</span>
+                <span class="inline-flex flex-col items-center gap-1">
+                  <span id="bannerSePrimariaQuick">S/E Chi Chiu</span>
+                  <span id="bannerRadhPrimariaBadge" class="hidden"></span>
+                </span>
                 <span class="opacity-60">&rarr;</span>
-                <span id="bannerSeSecundariaQuick">S/E Calama nueva</span>
-              </p>
+                <span class="inline-flex flex-col items-center gap-1">
+                  <span id="bannerSeSecundariaQuick">S/E Calama nueva</span>
+                  <span id="bannerRadhSecundariaBadge" class="hidden"></span>
+                </span>
+              </div>
             </div>
 
             <!-- Right Banner: Dynamic Big Technology SVG Icon & Action Tools -->
@@ -421,13 +430,6 @@
                     <p class="text-xs text-slate-500 dark:text-slate-400">Instalación y paño de conexión de la planta</p>
                   </div>
                 </div>
-                <button 
-                  onclick="copyField('lblSEPrimaria', 'Subestación Primaria')" 
-                  class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                  title="Copiar datos S/E Primaria"
-                >
-                  <i data-lucide="copy" class="w-4 h-4"></i>
-                </button>
               </div>
 
               <!-- Primary S/E Detail Fields -->
@@ -464,18 +466,12 @@
                     <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       Equipos EGP
                     </span>
-                    <button 
-                      onclick="copyField('lblEquiposPrimarios', 'Equipos Primarios')" 
-                      class="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
-                    >
-                      <i data-lucide="copy" class="w-3 h-3"></i> Copiar
-                    </button>
                   </div>
                   <div id="lblEquiposPrimarios" class="text-sm font-semibold font-mono text-slate-900 dark:text-white bg-white dark:bg-slate-900/90 p-3 rounded-lg border border-slate-200 dark:border-slate-700/80 break-words">
                     FT3 - HT3 - [H1 - H2 Acciona]
                   </div>
-                  <!-- Parsed Interactive Tags Container -->
-                  <div id="equiposPrimariosTags" class="flex flex-wrap gap-1.5 mt-2.5">
+                  <!-- Substation Contact Info Container -->
+                  <div id="contactoPrimarioContainer" class="mt-2.5 hidden">
                     <!-- Injected via JavaScript -->
                   </div>
                   <!-- Substation Operational Condition / Note -->
@@ -510,13 +506,6 @@
                     <p class="text-xs text-slate-500 dark:text-slate-400">Subestación seccionadora o de interconexión al SEN</p>
                   </div>
                 </div>
-                <button 
-                  onclick="copyField('lblSESecundaria', 'Subestación Secundaria')" 
-                  class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                  title="Copiar datos S/E Secundaria"
-                >
-                  <i data-lucide="copy" class="w-4 h-4"></i>
-                </button>
               </div>
 
               <!-- Secondary S/E Detail Fields -->
@@ -553,18 +542,12 @@
                     <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       Equipos
                     </span>
-                    <button 
-                      onclick="copyField('lblEquiposSecundarios', 'Equipos Secundarios')" 
-                      class="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
-                    >
-                      <i data-lucide="copy" class="w-3 h-3"></i> Copiar
-                    </button>
                   </div>
                   <div id="lblEquiposSecundarios" class="text-sm font-semibold font-mono text-slate-900 dark:text-white bg-white dark:bg-slate-900/90 p-3 rounded-lg border border-slate-200 dark:border-slate-700/80 break-words">
                     H3
                   </div>
-                  <!-- Parsed Interactive Tags Container -->
-                  <div id="equiposSecundariosTags" class="flex flex-wrap gap-1.5 mt-2.5">
+                  <!-- Substation Contact Info Container -->
+                  <div id="contactoSecundarioContainer" class="mt-2.5 hidden">
                     <!-- Injected via JavaScript -->
                   </div>
                   <!-- Substation Operational Condition / Note -->
@@ -588,23 +571,19 @@
                 <i data-lucide="git-commit" class="w-4 h-4 text-blue-500"></i>
                 Esquema Operacional de Enlace
               </span>
-              <button 
-                onclick="openDiagramModal()" 
-                class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold flex items-center gap-1 transition-colors hover:underline"
-              >
-                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
-                Ver plano unilineal completo
-              </button>
             </div>
 
             <!-- Flow Cards Diagram -->
             <div class="flex flex-col md:flex-row items-center justify-between gap-3 text-center">
               
               <!-- Plant Node -->
-              <div class="w-full md:w-1/3 bg-slate-50 dark:bg-slate-800/80 rounded-xl p-3 border border-slate-200 dark:border-slate-700">
-                <span class="text-[10px] font-bold uppercase text-slate-400 block mb-0.5">Parque / Generador</span>
-                <span id="diagramPlantNode" class="text-sm font-bold text-slate-800 dark:text-slate-100">PFV Azabache</span>
-                <span id="diagramMwNode" class="block text-xs font-mono text-slate-500 dark:text-slate-400 mt-0.5">59 MW</span>
+              <div class="w-full md:w-1/3 bg-slate-50 dark:bg-slate-800/80 rounded-xl p-3 border border-slate-200 dark:border-slate-700 flex items-center justify-center gap-3">
+                <div class="text-center">
+                  <span class="text-[10px] font-bold uppercase text-slate-400 block mb-0.5">Parque / Generador</span>
+                  <span id="diagramPlantNode" class="text-sm font-bold text-slate-800 dark:text-slate-100">PFV Azabache</span>
+                  <span id="diagramMwNode" class="block text-xs font-mono text-slate-500 dark:text-slate-400 mt-0.5">59 MW</span>
+                </div>
+                <div id="diagramPlantExtraNode" class="hidden"></div>
               </div>
 
               <!-- Connection Arrow 1 -->
@@ -697,7 +676,7 @@
 
             <!-- Signature -->
             <div class="text-xs font-medium text-slate-600 dark:text-slate-300 select-none">
-              Creado por <strong class="text-slate-900 dark:text-white font-semibold">MichaelNB</strong> &amp; <strong class="text-slate-900 dark:text-white font-semibold">IA Gemini</strong>
+              <strong class="text-slate-900 dark:text-white font-semibold">By Michael NB - &gamma;</strong>
             </div>
 
           </div>
@@ -938,6 +917,24 @@
     // -------------------------------------------------------------------------
     // 1. DATASET OF ALL 26 EGP ERNC PLANTS (PRELOADED FULL REPOSITORY)
     // -------------------------------------------------------------------------
+    // Encrypted contact vault (protected by password; zero plain-text emails in code)
+    const CONTACT_VAULT = {
+      C1: [144,150,156,167,151,191,116,161,161,158,178,113,154,155,149,182,160,167,153,96,176,160,166,115,82,185,157,168,170,149,174,113,154,155,149,182,160,167,153,96,176,160,166,115,82,180,157,168,177,161,185,146,121,153,149,176,154,168,166,147,123,148,168,165],
+      C2: [186,164,154,166,166,182,147,154,166,151,199,113,173,170,147,187,164,158,164,151,176,95,156,164,109,109,164,168,156,155,172,159,168,170,166,178,152,171,153,160,177,150,121,172,164,174,159,172,157,158,178,148,103,155,158,136,81,168,168,151,191,146,156,161,161,187,150,172,151,161,187,152,121,172,164,174,159,172,157,158,178,148,103,155,158],
+      C3: [177,150,172,168,147,176,153,168,120,151,187,160,171,155,154,182,157,158,102,149,185,108,89,165,149,182,151,174,157,160,193,150,172,120,151,187,160,171,155,154,182,157,158,102,149,185,108,89,165,158,188,147,168,171,114,178,159,168,170,149,181,154,165,157,96,176,157],
+      C4: [154,146,171,155,161,192,95,134,153,164,193,154,167,157,172,141,163,158,156,155,187,165,158,170,96,176,160,166,168,147,187,170,116,88,165,174,157,175,153,150,188,163,103,165,161,191,150,167,167,114,191,150,157,161,160,193,150,171,102,149,188,158,169,153,160,198],
+      C5: [176,150,167,172,164,188,148,168,166,166,191,160,165,120,147,178,164,103,155,161,186,108,89,168,164,188,152,171,153,159,174,148,162,167,160,123,148,156,159,151,187,150,171,120,147,178,164,103,155,161,186,108,89,167,162,178,163,154,156,161,191,150,172,153,160,177,150,172,120,147,178,164,103,155,161,186],
+      C6: [192,160,157,161,145,187,160,171,172,151,180,163,154,166,150,178,113,173,170,147,187,164,158,164,151,176,95,156,164,109,109,160,169,157,164,174,148,162,167,160,178,164,152,167,160,180,113,173,170,147,187,164,158,164,151,176,95,156,164],
+      C7: [176,157,103,168,158,174,159,162,158,155,176,146,156,161,161,187,113,156,157,158,178,160,160,170,161,194,161,103,155,161,186,108,89,157,154,189,146,171,156,161,141,148,158,164,151,188,152,171,167,167,189,95,156,167,159,136,81,156,164,96,176,150,167,172,164,188,148,168,166,166,191,160,165,155,154,182,157,158,120,149,178,157,158,167,153,191,160,174,168,96,176,160,166,115,82,191,166,171,170,151,174,113,156,157,158,178,160,160,170,161,194,161,103,155,161,186,108,89,158,151,185,154,169,157,96,193,160,171,170,151,192,113,156,157,158,178,160,160,170,161,194,161,103,155,161,186,108,89,157,162,182,159,168,120,149,178,157,158,167,153,191,160,174,168,96,176,160,166],
+      C8: [192,160,157,161,145,187,160,171,172,151,180,163,154,166,150,178,113,173,170,147,187,164,158,164,151,176,95,156,164,109,109,160,169,157,164,174,148,162,167,160,178,164,152,167,160,180,113,173,170,147,187,164,158,164,151,176,95,156,164,60,156,115,140,125,132,163,114,141,135,132,150,128,115,88,155,192,146,175,161,147,187,150,121,157,165,188,95,168,170,153,136,81,154,171,155,185,147,158,170,114,178,164,168,102,161,191,152,116,88,158,192,94,173,165,151,192,113,158,171,161,123,160,171,159,109,109,151,171,153,160,176,154,172,155,161,123,167,162,164,147,191,160,121,167,154,175,94,156,160,155,185,150,103,155,158],
+      C9: [183,160,171,159,151,123,148,154,166,151,193,150,121,171,147,178,164,154,102,149,185,108,89,166,155,176,160,165,153,165,123,157,168,170,151,187,171,158,166,114,192,146,158,171,147,123,148,165,115,82,174,157,158,176,155,192,95,154,157,150,188,113,172,153,151,192,146,103,155,158],
+      C10: [177,164,162,171,166,178,158,154,120,149,181,154,165,169,167,182,159,173,153,96,176,157],
+      C11: [188,161,158,170,147,177,160,171,157,165,122,148,168,172,114,176,152,158,102,149,185,108,89,170,164,186,154,171,153,160,177,146,157,120,149,180,150,173,170,147,187,164,166,161,165,182,160,167,102,149,185,108,89,155,147,180,166,171,172,161,189,113,156,159,151,193,163,154,166,165,186,154,172,161,161,187,95,156,164,109,109,157,154,155,167,187,146,169,120,149,180,150,173,170,147,187,164,166,161,165,182,160,167,102,149,185],
+      C12: [147,98,105,88,95,109,161,171,167,153,191,146,166,153,149,182,160,167,170,160,178,113,171,157,158,182,146,155,164,151,123,148,165],
+      C13: [192,160,157,161,145,187,160,171,172,151,176,153,162,155,161,141,165,171,153,160,192,150,165,157,149,123,148,165,115,82,176,148,158,170,150,174,113,173,170,147,187,164,158,164,151,176,95,156,164,109,109,151,172,173,147,191,150,179,120,166,191,146,167,171,151,185,150,156,102,149,185,108,89,168,148,174,163,171,153,172,174,113,173,170,147,187,164,158,164,151,176,95,156,164,109,109,153,179,157,160,193,150,167,167,114,193,163,154,166,165,178,157,158,155,96,176,157,116,88,149,177,166,171,153,160,141,165,171,153,160,192,150,165,157,149,123,148,165,115,82,186,163,154,154,171,141,165,171,153,160,192,150,165,157,149,123,148,165],
+      C14: [188,161,158,170,147,177,160,171,157,165,122,148,168,172,114,176,152,158,102,149,185,108,89,162,158,178,160,167,167,114,176,152,158,172,164,174,159,172,165,155,192,154,168,166,96,176,157,116,88,168,179,155,154,170,147,179,113,156,159,151,193,163,154,166,165,186,154,172,161,161,187,95,156,164,109,109,146,171,171,151,189,166,165,174,151,177,146,154,120,149,180,150,173,170,147,187,164,166,161,165,182,160,167,102,149,185,108,89,155,147,176,160,165,164,155,188,148,121,155,153,178,165,171,153,160,192,158,162,171,155,188,159,103,155,158,136,81,159,153,164,188,149,171,161,153,194,150,179,174,114,176,152,158,172,164,174,159,172,165,155,192,154,168,166,96,176,157]
+    };
+
     const PLANTS_DATA = [
       {
         tecnologia: "Solar",
@@ -948,6 +945,7 @@
         se_secundaria: "Calama nueva",
         propietario_secundario: "Acciona",
         equipos_secundarios: "H3",
+        contacto_secundario_enc: CONTACT_VAULT.C1,
         tipo_sscc: "",
         plano: "planos/Valle de los vientos.PNG"
       },
@@ -960,6 +958,7 @@
         se_secundaria: "Encuentro",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J16 [EGP]",
+        contacto_secundario_enc: CONTACT_VAULT.C2,
         tipo_sscc: "",
         plano: "planos/Finis Terrae.PNG"
       },
@@ -972,6 +971,7 @@
         se_secundaria: "Arena",
         propietario_secundario: "EnorChile",
         equipos_secundarios: "J2",
+        contacto_secundario_enc: CONTACT_VAULT.C3,
         tipo_sscc: "",
         plano: "planos/Lalackama.PNG"
       },
@@ -984,6 +984,7 @@
         se_secundaria: "Centinela",
         propietario_secundario: "Redinter",
         equipos_secundarios: "J10 - J11 - J12 [INT 1/2]",
+        contacto_secundario_enc: CONTACT_VAULT.C4,
         tipo_sscc: "CPF",
         plano: "planos/Las Salinas.PNG"
       },
@@ -996,6 +997,7 @@
         se_secundaria: "Andes",
         propietario_secundario: "AES Andes",
         equipos_secundarios: "J12 [EGP]",
+        contacto_secundario_enc: CONTACT_VAULT.C5,
         tipo_sscc: "",
         plano: "planos/Sol de Lila.PNG"
       },
@@ -1008,6 +1010,7 @@
         se_secundaria: "Miraje",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J1 - J2 - J3 [INT 1/2]",
+        contacto_secundario_enc: CONTACT_VAULT.C6,
         tipo_sscc: "",
         plano: "planos/Valle del sol.PNG"
       },
@@ -1020,6 +1023,7 @@
         se_secundaria: "Illapa",
         propietario_secundario: "Celeo Redes",
         equipos_secundarios: "J15 [EGP] - J14 -J13 [Colbún] [INT 1/2]",
+        contacto_secundario_enc: CONTACT_VAULT.C7,
         nota_se_secundaria: "J15 reconexión automática deshabilitada",
         radh_secundaria: "J15",
         tipo_sscc: "CPF",
@@ -1036,6 +1040,7 @@
         se_secundaria: "Carrera Pinto",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J17 - J18 [EGP]",
+        contacto_secundario_enc: CONTACT_VAULT.C6,
         nota_se_secundaria: "J17/J18 reconexión automática deshabilitada",
         radh_secundaria: "J17/J18",
         tipo_sscc: "CPF",
@@ -1050,6 +1055,7 @@
         se_secundaria: "Diego de Almagro",
         propietario_secundario: "Transelec",
         equipos_secundarios: "H9",
+        contacto_secundario_enc: CONTACT_VAULT.C6,
         tipo_sscc: "",
         plano: "planos/Chañares.PNG"
       },
@@ -1062,6 +1068,7 @@
         se_secundaria: "Línea Pajonales",
         propietario_secundario: "Transelec",
         equipos_secundarios: "E1",
+        contacto_secundario_enc: CONTACT_VAULT.C8,
         tipo_sscc: "",
         plano: "planos/La Silla.PNG"
       },
@@ -1074,6 +1081,7 @@
         se_secundaria: "El Manzano",
         propietario_secundario: "STS [Saesa]",
         equipos_secundarios: "F1 - FT5 - JT5 [EGP]",
+        contacto_secundario_enc: CONTACT_VAULT.C9,
         tipo_sscc: "",
         plano: "planos/El Manzano.PNG"
       },
@@ -1084,8 +1092,9 @@
         propietario_primario: "Enel Green Power",
         equipos_primarios: "FT1 - HT1 - H1",
         se_secundaria: "Punta Peuco [Polpaico]",
-        propietario_secundario: "Punta Peuco (Polpaico)",
+        propietario_secundario: "Chilquinta",
         equipos_secundarios: "H2 [EGP]",
+        contacto_secundario_enc: CONTACT_VAULT.C10,
         tipo_sscc: "CPF - CSF",
         plano: "planos/Don Humberto.PNG"
       },
@@ -1098,6 +1107,7 @@
         se_secundaria: "Calama nueva",
         propietario_secundario: "CGE Transmisión",
         equipos_secundarios: "H2",
+        contacto_secundario_enc: CONTACT_VAULT.C11,
         tipo_sscc: "CTF",
         plano: "planos/Valle de los vientos.PNG"
       },
@@ -1112,6 +1122,7 @@
         se_secundaria: "Sierra Gorda Este",
         propietario_secundario: "EnorChile [MSGE]",
         equipos_secundarios: "J3 [EGP]",
+        contacto_secundario_enc: CONTACT_VAULT.C3,
         nota_se_secundaria: "J3 reconexión automática deshabilitada",
         radh_secundaria: "J3",
         tipo_sscc: "CTF",
@@ -1122,10 +1133,12 @@
         nombre: "PE- Taltal [102MW]",
         se_primaria: "Taltal",
         propietario_primario: "Enel Green Power",
-        equipos_primarios: "FT1 - [J1 Transelec]",
+        equipos_primarios: "FT1 - [J1 Transelec] - [F10 Minera Guanaco - RNE]",
+        contacto_primario_enc: CONTACT_VAULT.C12,
         se_secundaria: "Jadresic",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J8 - J9 - J7 [INT 1/2]",
+        contacto_secundario_enc: CONTACT_VAULT.C13,
         tipo_sscc: "CTF",
         plano: "planos/Taltal.PNG"
       },
@@ -1138,6 +1151,7 @@
         se_secundaria: "Las Palmas",
         propietario_secundario: "Transelec",
         equipos_secundarios: "JG(JT1) [EGP]",
+        contacto_secundario_enc: CONTACT_VAULT.C13,
         tipo_sscc: "CTF",
         plano: "planos/Canela.PNG"
       },
@@ -1150,6 +1164,7 @@
         se_secundaria: "Las Palmas",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J2 [EGP]",
+        contacto_secundario_enc: CONTACT_VAULT.C13,
         tipo_sscc: "CTF",
         plano: "planos/Canela II.PNG"
       },
@@ -1159,9 +1174,11 @@
         se_primaria: "Talinay",
         propietario_primario: "Enel Green Power",
         equipos_primarios: "M7 - J1 -JL - [JL2 PtaTalca - EnorChile]",
+        contacto_primario_enc: CONTACT_VAULT.C3,
         se_secundaria: "La Cebada",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J4",
+        contacto_secundario_enc: CONTACT_VAULT.C13,
         tipo_sscc: "CTF",
         plano: "planos/Talinay oriente.PNG"
       },
@@ -1171,9 +1188,11 @@
         se_primaria: "Talinay",
         propietario_primario: "Enel Green Power",
         equipos_primarios: "FT2 - J2 -JL - [JL2 PtaTalca - EnorChile]",
+        contacto_primario_enc: CONTACT_VAULT.C3,
         se_secundaria: "La Cebada",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J4",
+        contacto_secundario_enc: CONTACT_VAULT.C13,
         tipo_sscc: "CTF",
         plano: "planos/Talinay poniente.PNG"
       },
@@ -1186,6 +1205,8 @@
         se_secundaria: "Renaico",
         propietario_secundario: "Enel Green Power",
         equipos_secundarios: "JL2",
+        esquema_parque: "EDAG ON ; ERAG ON REQUEST FROM ACCIONA",
+        badge_esquema: "DAG on - RAG off",
         tipo_sscc: "",
         plano: "planos/La Cabaña.PNG"
       },
@@ -1195,11 +1216,12 @@
         se_primaria: "Los Buenos Aires",
         propietario_primario: "Enel Green Power",
         equipos_primarios: "FT1 - BT1 - B1 - B2",
-        nota_se_primaria: "B1/B2 reconexión automática deshabilitada",
+        nota_se_primaria: "B1 y B2 reconexión automática habilitada",
         radh_primaria: "B1/B2",
         se_secundaria: "Los Angeles & Negrete",
         propietario_secundario: "CGE Transmisión",
         equipos_secundarios: "B4 & B1",
+        contacto_secundario_enc: CONTACT_VAULT.C14,
         tipo_sscc: "CTF",
         plano: "planos/Los buenos aires.PNG"
       },
@@ -1214,8 +1236,11 @@
         se_secundaria: "Mulchén",
         propietario_secundario: "Celeo Redes",
         equipos_secundarios: "J7 [EGP]",
+        contacto_secundario_enc: CONTACT_VAULT.C7,
         nota_se_secundaria: "J7 reconexión automática deshabilitada",
         radh_secundaria: "J7",
+        esquema_parque: "EDAG ON ; ERAG ON REQUEST FROM ACCIONA",
+        badge_esquema: "DAG on - RAG off",
         tipo_sscc: "CTF",
         plano: "planos/Renaico I.PNG"
       },
@@ -1228,6 +1253,9 @@
         se_secundaria: "Mulchén",
         propietario_secundario: "Celeo Redes",
         equipos_secundarios: "J7 [EGP]",
+        contacto_secundario_enc: CONTACT_VAULT.C7,
+        esquema_parque: "EDAG ON ; ERAG ON REQUEST FROM ACCIONA",
+        badge_esquema: "DAG on - RAG off",
         tipo_sscc: "",
         plano: "planos/Renaico II.PNG"
       },
@@ -1250,8 +1278,9 @@
         propietario_primario: "Enel Green Power",
         equipos_primarios: "FB1 - FB2 - FB3",
         se_secundaria: "Punta Peuco [Polpaico]",
-        propietario_secundario: "Polpaico",
+        propietario_secundario: "Chilquinta",
         equipos_secundarios: "H2",
+        contacto_secundario_enc: CONTACT_VAULT.C10,
         tipo_sscc: "CPF - CSF",
         plano: "planos/Bess Don Humberto.PNG"
       },
@@ -1264,18 +1293,90 @@
         se_secundaria: "El Manzano",
         propietario_secundario: "STS [Saesa]",
         equipos_secundarios: "FT5 - JT5",
+        contacto_secundario_enc: CONTACT_VAULT.C9,
         tipo_sscc: "CPF - CSF",
         plano: "planos/Bess El Manzano.PNG"
       }
     ];
 
     // -------------------------------------------------------------------------
-    // 2. STATE CONFIGURATION
+    // 2. STATE CONFIGURATION & CONTACT ENCRYPTION ENGINE
     // -------------------------------------------------------------------------
     let currentPlantIndex = 0;
     let selectedTechFilter = 'ALL';
     let currentSearchTerm = '';
     let filteredIndices = [];
+    let unlockedContactKey = '';
+
+    function verifyContactPassword(pwd) {
+      if (!pwd || pwd.length !== 5) return false;
+      let h1 = 5381;
+      let h2 = 9187;
+      for (let i = 0; i < pwd.length; i++) {
+        const c = pwd.charCodeAt(i);
+        h1 = ((h1 * 33) + c) % 1000000007;
+        h2 = ((h2 * 131) + c) % 1000000009;
+      }
+      return h1 === 680689064 && h2 === 555869608;
+    }
+
+    function decryptContact(encArr) {
+      if (!encArr || !unlockedContactKey) return '';
+      let out = '';
+      const kLen = unlockedContactKey.length;
+      for (let i = 0; i < encArr.length; i++) {
+        const code = encArr[i] - unlockedContactKey.charCodeAt(i % kLen);
+        out += String.fromCharCode(code);
+      }
+      return out;
+    }
+
+    function unlockContacts(inputId) {
+      const inputEl = document.getElementById(inputId);
+      const val = inputEl ? inputEl.value.trim() : '';
+      if (verifyContactPassword(val)) {
+        unlockedContactKey = val;
+        selectPlant(currentPlantIndex);
+        showToast('Contactos desbloqueados');
+      } else {
+        if (inputEl) {
+          inputEl.value = '';
+          inputEl.focus();
+        }
+        showToast('Contraseña incorrecta');
+      }
+    }
+
+    function lockContacts() {
+      unlockedContactKey = '';
+      selectPlant(currentPlantIndex);
+      showToast('Contactos bloqueados');
+    }
+
+    function renderLockedContactBox(inputId) {
+      return `
+        <div class="flex flex-wrap items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 shadow-2xs" style="font-family: Arial, sans-serif;">
+          <div class="flex items-center gap-1.5 font-bold text-slate-700 dark:text-slate-200">
+            <i data-lucide="lock" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400"></i>
+            <span>Contacto protegido</span>
+          </div>
+          <form onsubmit="event.preventDefault(); unlockContacts('${inputId}');" class="flex items-center gap-1.5">
+            <input 
+              id="${inputId}" 
+              type="password" 
+              placeholder="Contraseña..." 
+              class="px-2 py-1 rounded border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs w-28 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+            <button 
+              type="submit"
+              class="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-semibold transition-colors cursor-pointer"
+            >
+              Desbloquear
+            </button>
+          </form>
+        </div>
+      `;
+    }
 
     // Technology metadata & color schemes matching VBA specifications
     const TECH_THEMES = {
@@ -1410,7 +1511,11 @@
             plant.nota_se_primaria || '',
             plant.nota_se_secundaria || '',
             plant.radh_primaria || '',
-            plant.radh_secundaria || ''
+            plant.radh_secundaria || '',
+            decryptContact(plant.contacto_primario_enc),
+            decryptContact(plant.contacto_secundario_enc),
+            plant.esquema_parque || '',
+            plant.badge_esquema || ''
           ].join(' ').toLowerCase();
 
           if (!searchable.includes(term)) return;
@@ -1452,14 +1557,26 @@
           activeClass = `hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 border-l-4 border-transparent`;
         }
 
+        const isPrimDeshab = (plant.nota_se_primaria || '').toLowerCase().includes('deshabilitada');
+        const primTitle = plant.nota_se_primaria ? `S/E ${plant.se_primaria}: ${plant.nota_se_primaria}` : `S/E ${plant.se_primaria}: Reconexión ${plant.radh_primaria}`;
+        const primBadgeClass = isPrimDeshab 
+          ? 'bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800' 
+          : 'bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
+
         const primRadh = plant.radh_primaria ? `
-          <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[9.5px] font-bold font-mono bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 shrink-0" title="S/E ${plant.se_primaria}: Reconexión automática deshabilitada (${plant.radh_primaria})">
+          <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[9.5px] font-bold font-mono ${primBadgeClass} border shrink-0" title="${primTitle}">
             ${plant.radh_primaria}
           </span>
         ` : '';
 
+        const isSecDeshab = (plant.nota_se_secundaria || '').toLowerCase().includes('deshabilitada');
+        const secTitle = plant.nota_se_secundaria ? `S/E ${plant.se_secundaria}: ${plant.nota_se_secundaria}` : `S/E ${plant.se_secundaria}: Reconexión ${plant.radh_secundaria}`;
+        const secBadgeClass = isSecDeshab 
+          ? 'bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800' 
+          : 'bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
+
         const secRadh = plant.radh_secundaria ? `
-          <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[9.5px] font-bold font-mono bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 shrink-0" title="S/E ${plant.se_secundaria}: Reconexión automática deshabilitada (${plant.radh_secundaria})">
+          <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[9.5px] font-bold font-mono ${secBadgeClass} border shrink-0" title="${secTitle}">
             ${plant.radh_secundaria}
           </span>
         ` : '';
@@ -1513,8 +1630,20 @@
       const banner = document.getElementById('dynamicBanner');
       banner.style.backgroundColor = tech.color;
 
-      // Update Plant Name
+      // Update Plant Name & Cartilla Badges (Esquema, SSCC)
       document.getElementById('bannerPlantName').innerText = plant.nombre;
+      const bannerExtraEl = document.getElementById('bannerExtraBadges');
+      const extraBadgesHtml = [];
+      const badgeStyle = `font-family: Arial, sans-serif; background-color: ${tech.color};`;
+      const badgeClasses = `px-3 py-1 rounded-xl text-xs sm:text-sm font-bold text-white border border-white shadow-sm`;
+
+      if (plant.badge_esquema && plant.badge_esquema.trim() !== '') {
+        extraBadgesHtml.push(`<span class="${badgeClasses}" style="${badgeStyle}">${plant.badge_esquema}</span>`);
+      }
+      if (plant.tipo_sscc && plant.tipo_sscc.trim() !== '') {
+        extraBadgesHtml.push(`<span class="${badgeClasses}" style="${badgeStyle}" title="Tipo SSCC: ${plant.tipo_sscc}">${plant.tipo_sscc}</span>`);
+      }
+      bannerExtraEl.innerHTML = extraBadgesHtml.join('');
       
       // Update Badges
       document.getElementById('bannerTechText').innerText = tech.name;
@@ -1522,6 +1651,32 @@
       document.getElementById('bannerOwnerText').innerText = plant.propietario_primario || 'Enel Green Power';
       document.getElementById('bannerSePrimariaQuick').innerText = 'S/E ' + (plant.se_primaria || 'N/A');
       document.getElementById('bannerSeSecundariaQuick').innerText = 'S/E ' + (plant.se_secundaria || 'N/A');
+
+      // Reconexión Badges next to S/E Primaria and S/E Secundaria in Subtitle
+      const radhSubClasses = `px-2 py-0.5 rounded-lg text-xs font-bold text-white border border-white shadow-2xs`;
+      const radhPrimEl = document.getElementById('bannerRadhPrimariaBadge');
+      if (plant.radh_primaria && plant.radh_primaria.trim() !== '') {
+        const primTitle = plant.nota_se_primaria ? `S/E ${plant.se_primaria}: ${plant.nota_se_primaria}` : `S/E ${plant.se_primaria}: ${plant.radh_primaria}`;
+        radhPrimEl.className = radhSubClasses;
+        radhPrimEl.setAttribute('style', badgeStyle);
+        radhPrimEl.setAttribute('title', primTitle);
+        radhPrimEl.innerText = plant.radh_primaria;
+      } else {
+        radhPrimEl.className = 'hidden';
+        radhPrimEl.innerText = '';
+      }
+
+      const radhSecEl = document.getElementById('bannerRadhSecundariaBadge');
+      if (plant.radh_secundaria && plant.radh_secundaria.trim() !== '') {
+        const secTitle = plant.nota_se_secundaria ? `S/E ${plant.se_secundaria}: ${plant.nota_se_secundaria}` : `S/E ${plant.se_secundaria}: ${plant.radh_secundaria}`;
+        radhSecEl.className = radhSubClasses;
+        radhSecEl.setAttribute('style', badgeStyle);
+        radhSecEl.setAttribute('title', secTitle);
+        radhSecEl.innerText = plant.radh_secundaria;
+      } else {
+        radhSecEl.className = 'hidden';
+        radhSecEl.innerText = '';
+      }
 
       // Small badge icon
       document.getElementById('badgeIconContainer').innerHTML = `
@@ -1547,16 +1702,58 @@
         badgePrim.className = 'text-[11px] px-2 py-0.5 rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300';
       }
 
-      // Render individual interactive equipment tags for S/E Primaria
-      renderEquipmentTags('equiposPrimariosTags', plant.equipos_primarios);
+      // Render Contact Info for S/E Primaria
+      const contactoPrimEl = document.getElementById('contactoPrimarioContainer');
+      if (plant.contacto_primario_enc && plant.contacto_primario_enc.length > 0) {
+        if (unlockedContactKey) {
+          const decPrim = decryptContact(plant.contacto_primario_enc);
+          const safeContactPrim = decPrim.replace(/'/g, "\\'");
+          contactoPrimEl.innerHTML = `
+            <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs bg-blue-50/80 dark:bg-blue-950/50 text-slate-800 dark:text-slate-200 border border-blue-200 dark:border-blue-800/80 shadow-2xs" style="font-family: Arial, sans-serif;">
+              <div class="break-all">
+                <span class="font-bold text-blue-900 dark:text-blue-300">Contacto:</span>
+                <span class="ml-1">${decPrim}</span>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button 
+                  type="button"
+                  onclick="copySnippet('${safeContactPrim}')" 
+                  title="Copiar correos de contacto"
+                  class="text-[11px] text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 font-medium cursor-pointer"
+                >
+                  <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+                </button>
+                <button 
+                  type="button"
+                  onclick="lockContacts()" 
+                  title="Bloquear contactos"
+                  class="text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 flex items-center cursor-pointer"
+                >
+                  <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          `;
+        } else {
+          contactoPrimEl.innerHTML = renderLockedContactBox('pwdInputPrim');
+        }
+        contactoPrimEl.classList.remove('hidden');
+      } else {
+        contactoPrimEl.innerHTML = '';
+        contactoPrimEl.classList.add('hidden');
+      }
 
       // Render Substation Operational Note (S/E Primaria)
       const notaPrimEl = document.getElementById('notaPrimariaContainer');
-      const textNotaPrim = plant.nota_se_primaria || (plant.radh_primaria ? `${plant.radh_primaria} reconexión automática deshabilitada` : '');
+      const textNotaPrim = plant.nota_se_primaria || (plant.radh_primaria ? `${plant.radh_primaria} reconexión automática` : '');
 
       if (textNotaPrim && textNotaPrim.trim() !== '') {
+        const isDeshabPrim = textNotaPrim.toLowerCase().includes('deshabilitada');
+        const boxClassPrim = isDeshabPrim 
+          ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border-amber-300 dark:border-amber-700/80'
+          : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-200 border-emerald-300 dark:border-emerald-700/80';
         notaPrimEl.innerHTML = `
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700/80 shadow-2xs">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold ${boxClassPrim} border shadow-2xs">
             <span>${textNotaPrim}</span>
           </div>
         `;
@@ -1581,16 +1778,70 @@
         badgeSec.className = 'text-[11px] px-2 py-0.5 rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300';
       }
 
-      // Render individual interactive equipment tags for S/E Secundaria
-      renderEquipmentTags('equiposSecundariosTags', plant.equipos_secundarios);
+      // Render Contact Info for S/E Secundaria
+      const contactoSecEl = document.getElementById('contactoSecundarioContainer');
+      if (plant.contacto_secundario_enc && plant.contacto_secundario_enc.length > 0) {
+        if (unlockedContactKey) {
+          const decSec = decryptContact(plant.contacto_secundario_enc);
+          const safeContactSec = decSec.replace(/\n/g, ' | ').replace(/'/g, "\\'");
+          const linesSec = decSec.split('\n');
+          const formattedSec = linesSec.map((line, idx) => {
+            if (idx === 0) {
+              return `<div><span class="font-bold text-blue-900 dark:text-blue-300">Contacto:</span><span class="ml-1">${line}</span></div>`;
+            }
+            const colonIdx = line.indexOf(':');
+            if (colonIdx !== -1) {
+              const label = line.substring(0, colonIdx + 1);
+              const rest = line.substring(colonIdx + 1);
+              return `<div class="mt-1"><span class="font-bold text-blue-900 dark:text-blue-300">${label}</span><span>${rest}</span></div>`;
+            }
+            return `<div class="mt-1">${line}</div>`;
+          }).join('');
+          contactoSecEl.innerHTML = `
+            <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs bg-blue-50/80 dark:bg-blue-950/50 text-slate-800 dark:text-slate-200 border border-blue-200 dark:border-blue-800/80 shadow-2xs" style="font-family: Arial, sans-serif;">
+              <div class="break-all">
+                ${formattedSec}
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button 
+                  type="button"
+                  onclick="copySnippet('${safeContactSec}')" 
+                  title="Copiar correos de contacto"
+                  class="text-[11px] text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 font-medium cursor-pointer"
+                >
+                  <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+                </button>
+                <button 
+                  type="button"
+                  onclick="lockContacts()" 
+                  title="Bloquear contactos"
+                  class="text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 flex items-center cursor-pointer"
+                >
+                  <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          `;
+        } else {
+          contactoSecEl.innerHTML = renderLockedContactBox('pwdInputSec');
+        }
+        contactoSecEl.classList.remove('hidden');
+      } else {
+        contactoSecEl.innerHTML = '';
+        contactoSecEl.classList.add('hidden');
+      }
 
       // Render Substation Operational Note (S/E Secundaria) - Sin icono
       const notaSecEl = document.getElementById('notaSecundariaContainer');
-      const textNotaSec = plant.nota_se_secundaria || (plant.radh_secundaria ? `${plant.radh_secundaria} reconexión automática deshabilitada` : '');
+      const textNotaSec = plant.nota_se_secundaria || (plant.radh_secundaria ? `${plant.radh_secundaria} reconexión automática` : '');
 
       if (textNotaSec && textNotaSec.trim() !== '') {
+        const isDeshabSec = textNotaSec.toLowerCase().includes('deshabilitada');
+        const boxClassSec = isDeshabSec 
+          ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border-amber-300 dark:border-amber-700/80'
+          : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-200 border-emerald-300 dark:border-emerald-700/80';
         notaSecEl.innerHTML = `
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700/80 shadow-2xs">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold ${boxClassSec} border shadow-2xs">
             <span>${textNotaSec}</span>
           </div>
         `;
@@ -1603,6 +1854,18 @@
       // 4. TOPOLOGY FLOW DIAGRAM UPDATE
       document.getElementById('diagramPlantNode').innerText = plant.nombre.split('[')[0].trim();
       document.getElementById('diagramMwNode').innerText = mw;
+      const diagramExtraEl = document.getElementById('diagramPlantExtraNode');
+      if (plant.esquema_parque && plant.esquema_parque.trim() !== '') {
+        diagramExtraEl.innerHTML = `
+          <div class="px-2.5 py-1.5 rounded-lg text-[11px] font-bold bg-amber-50 dark:bg-amber-950/70 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700/80 shadow-2xs leading-tight" style="font-family: Arial, sans-serif;">
+            ${plant.esquema_parque}
+          </div>
+        `;
+        diagramExtraEl.classList.remove('hidden');
+      } else {
+        diagramExtraEl.innerHTML = '';
+        diagramExtraEl.classList.add('hidden');
+      }
       document.getElementById('diagramSePrimariaNode').innerText = plant.se_primaria || '-';
       document.getElementById('diagramEqPrimariaNode').innerText = plant.equipos_primarios || '-';
       document.getElementById('diagramSeSecundariaNode').innerText = plant.se_secundaria || '-';

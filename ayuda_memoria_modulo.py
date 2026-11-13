@@ -23,6 +23,26 @@ import streamlit as st
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ======================================================================================
+# BÓVEDA CIFRADA DE CONTACTOS (SIN CORREOS NI CONTRASEÑA EN TEXTO PLANO)
+# ======================================================================================
+CONTACT_VAULT = {
+    "C1": [144,150,156,167,151,191,116,161,161,158,178,113,154,155,149,182,160,167,153,96,176,160,166,115,82,185,157,168,170,149,174,113,154,155,149,182,160,167,153,96,176,160,166,115,82,180,157,168,177,161,185,146,121,153,149,176,154,168,166,147,123,148,168,165],
+    "C2": [186,164,154,166,166,182,147,154,166,151,199,113,173,170,147,187,164,158,164,151,176,95,156,164,109,109,164,168,156,155,172,159,168,170,166,178,152,171,153,160,177,150,121,172,164,174,159,172,157,158,178,148,103,155,158,136,81,168,168,151,191,146,156,161,161,187,150,172,151,161,187,152,121,172,164,174,159,172,157,158,178,148,103,155,158],
+    "C3": [177,150,172,168,147,176,153,168,120,151,187,160,171,155,154,182,157,158,102,149,185,108,89,165,149,182,151,174,157,160,193,150,172,120,151,187,160,171,155,154,182,157,158,102,149,185,108,89,165,158,188,147,168,171,114,178,159,168,170,149,181,154,165,157,96,176,157],
+    "C4": [154,146,171,155,161,192,95,134,153,164,193,154,167,157,172,141,163,158,156,155,187,165,158,170,96,176,160,166,168,147,187,170,116,88,165,174,157,175,153,150,188,163,103,165,161,191,150,167,167,114,191,150,157,161,160,193,150,171,102,149,188,158,169,153,160,198],
+    "C5": [176,150,167,172,164,188,148,168,166,166,191,160,165,120,147,178,164,103,155,161,186,108,89,168,164,188,152,171,153,159,174,148,162,167,160,123,148,156,159,151,187,150,171,120,147,178,164,103,155,161,186,108,89,167,162,178,163,154,156,161,191,150,172,153,160,177,150,172,120,147,178,164,103,155,161,186],
+    "C6": [192,160,157,161,145,187,160,171,172,151,180,163,154,166,150,178,113,173,170,147,187,164,158,164,151,176,95,156,164,109,109,160,169,157,164,174,148,162,167,160,178,164,152,167,160,180,113,173,170,147,187,164,158,164,151,176,95,156,164],
+    "C7": [176,157,103,168,158,174,159,162,158,155,176,146,156,161,161,187,113,156,157,158,178,160,160,170,161,194,161,103,155,161,186,108,89,157,154,189,146,171,156,161,141,148,158,164,151,188,152,171,167,167,189,95,156,167,159,136,81,156,164,96,176,150,167,172,164,188,148,168,166,166,191,160,165,155,154,182,157,158,120,149,178,157,158,167,153,191,160,174,168,96,176,160,166,115,82,191,166,171,170,151,174,113,156,157,158,178,160,160,170,161,194,161,103,155,161,186,108,89,158,151,185,154,169,157,96,193,160,171,170,151,192,113,156,157,158,178,160,160,170,161,194,161,103,155,161,186,108,89,157,162,182,159,168,120,149,178,157,158,167,153,191,160,174,168,96,176,160,166],
+    "C8": [192,160,157,161,145,187,160,171,172,151,180,163,154,166,150,178,113,173,170,147,187,164,158,164,151,176,95,156,164,109,109,160,169,157,164,174,148,162,167,160,178,164,152,167,160,180,113,173,170,147,187,164,158,164,151,176,95,156,164,60,156,115,140,125,132,163,114,141,135,132,150,128,115,88,155,192,146,175,161,147,187,150,121,157,165,188,95,168,170,153,136,81,154,171,155,185,147,158,170,114,178,164,168,102,161,191,152,116,88,158,192,94,173,165,151,192,113,158,171,161,123,160,171,159,109,109,151,171,153,160,176,154,172,155,161,123,167,162,164,147,191,160,121,167,154,175,94,156,160,155,185,150,103,155,158],
+    "C9": [183,160,171,159,151,123,148,154,166,151,193,150,121,171,147,178,164,154,102,149,185,108,89,166,155,176,160,165,153,165,123,157,168,170,151,187,171,158,166,114,192,146,158,171,147,123,148,165,115,82,174,157,158,176,155,192,95,154,157,150,188,113,172,153,151,192,146,103,155,158],
+    "C10": [177,164,162,171,166,178,158,154,120,149,181,154,165,169,167,182,159,173,153,96,176,157],
+    "C11": [188,161,158,170,147,177,160,171,157,165,122,148,168,172,114,176,152,158,102,149,185,108,89,170,164,186,154,171,153,160,177,146,157,120,149,180,150,173,170,147,187,164,166,161,165,182,160,167,102,149,185,108,89,155,147,180,166,171,172,161,189,113,156,159,151,193,163,154,166,165,186,154,172,161,161,187,95,156,164,109,109,157,154,155,167,187,146,169,120,149,180,150,173,170,147,187,164,166,161,165,182,160,167,102,149,185],
+    "C12": [147,98,105,88,95,109,161,171,167,153,191,146,166,153,149,182,160,167,170,160,178,113,171,157,158,182,146,155,164,151,123,148,165],
+    "C13": [192,160,157,161,145,187,160,171,172,151,176,153,162,155,161,141,165,171,153,160,192,150,165,157,149,123,148,165,115,82,176,148,158,170,150,174,113,173,170,147,187,164,158,164,151,176,95,156,164,109,109,151,172,173,147,191,150,179,120,166,191,146,167,171,151,185,150,156,102,149,185,108,89,168,148,174,163,171,153,172,174,113,173,170,147,187,164,158,164,151,176,95,156,164,109,109,153,179,157,160,193,150,167,167,114,193,163,154,166,165,178,157,158,155,96,176,157,116,88,149,177,166,171,153,160,141,165,171,153,160,192,150,165,157,149,123,148,165,115,82,186,163,154,154,171,141,165,171,153,160,192,150,165,157,149,123,148,165],
+    "C14": [188,161,158,170,147,177,160,171,157,165,122,148,168,172,114,176,152,158,102,149,185,108,89,162,158,178,160,167,167,114,176,152,158,172,164,174,159,172,165,155,192,154,168,166,96,176,157,116,88,168,179,155,154,170,147,179,113,156,159,151,193,163,154,166,165,186,154,172,161,161,187,95,156,164,109,109,146,171,171,151,189,166,165,174,151,177,146,154,120,149,180,150,173,170,147,187,164,166,161,165,182,160,167,102,149,185,108,89,155,147,176,160,165,164,155,188,148,121,155,153,178,165,171,153,160,192,158,162,171,155,188,159,103,155,158,136,81,159,153,164,188,149,171,161,153,194,150,179,174,114,176,152,158,172,164,174,159,172,165,155,192,154,168,166,96,176,157],
+}
+
+# ======================================================================================
 # BASE DE DATOS DE CENTRALES ERNC (26 ACTIVOS: 12 SOLAR, 11 EÓLICA, 3 BESS)
 # ======================================================================================
 PLANTS_DATA = [
@@ -36,6 +56,7 @@ PLANTS_DATA = [
         "se_secundaria": "Calama nueva",
         "propietario_secundario": "Acciona",
         "equipos_secundarios": "H3",
+        "contacto_secundario_enc": CONTACT_VAULT["C1"],
         "tipo_sscc": "",
         "plano": "planos/Valle de los vientos.PNG"
     },
@@ -48,6 +69,7 @@ PLANTS_DATA = [
         "se_secundaria": "Encuentro",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "J16 [EGP]",
+        "contacto_secundario_enc": CONTACT_VAULT["C2"],
         "tipo_sscc": "",
         "plano": "planos/Finis Terrae.PNG"
     },
@@ -60,6 +82,7 @@ PLANTS_DATA = [
         "se_secundaria": "Arena",
         "propietario_secundario": "EnorChile",
         "equipos_secundarios": "J2",
+        "contacto_secundario_enc": CONTACT_VAULT["C3"],
         "tipo_sscc": "",
         "plano": "planos/Lalackama.PNG"
     },
@@ -72,6 +95,7 @@ PLANTS_DATA = [
         "se_secundaria": "Centinela",
         "propietario_secundario": "Redinter",
         "equipos_secundarios": "J10 - J11 - J12 [INT 1/2]",
+        "contacto_secundario_enc": CONTACT_VAULT["C4"],
         "tipo_sscc": "CPF",
         "plano": "planos/Las Salinas.PNG"
     },
@@ -84,6 +108,7 @@ PLANTS_DATA = [
         "se_secundaria": "Andes",
         "propietario_secundario": "AES Andes",
         "equipos_secundarios": "J12 [EGP]",
+        "contacto_secundario_enc": CONTACT_VAULT["C5"],
         "tipo_sscc": "",
         "plano": "planos/Sol de Lila.PNG"
     },
@@ -96,6 +121,7 @@ PLANTS_DATA = [
         "se_secundaria": "Miraje",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "J1 - J2 - J3 [INT 1/2]",
+        "contacto_secundario_enc": CONTACT_VAULT["C6"],
         "tipo_sscc": "",
         "plano": "planos/Valle del sol.PNG"
     },
@@ -108,6 +134,7 @@ PLANTS_DATA = [
         "se_secundaria": "Illapa",
         "propietario_secundario": "Celeo Redes",
         "equipos_secundarios": "J15 [EGP] - J14 -J13 [Colbún] [INT 1/2]",
+        "contacto_secundario_enc": CONTACT_VAULT["C7"],
         "nota_se_secundaria": "J15 reconexión automática deshabilitada",
         "radh_secundaria": "J15",
         "tipo_sscc": "CPF",
@@ -124,6 +151,7 @@ PLANTS_DATA = [
         "se_secundaria": "Carrera Pinto",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "J17 - J18 [EGP]",
+        "contacto_secundario_enc": CONTACT_VAULT["C6"],
         "nota_se_secundaria": "J17/J18 reconexión automática deshabilitada",
         "radh_secundaria": "J17/J18",
         "tipo_sscc": "CPF",
@@ -138,6 +166,7 @@ PLANTS_DATA = [
         "se_secundaria": "Diego de Almagro",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "H9",
+        "contacto_secundario_enc": CONTACT_VAULT["C6"],
         "tipo_sscc": "",
         "plano": "planos/Chañares.PNG"
     },
@@ -150,6 +179,7 @@ PLANTS_DATA = [
         "se_secundaria": "Línea Pajonales",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "E1",
+        "contacto_secundario_enc": CONTACT_VAULT["C8"],
         "tipo_sscc": "",
         "plano": "planos/La Silla.PNG"
     },
@@ -162,6 +192,7 @@ PLANTS_DATA = [
         "se_secundaria": "El Manzano",
         "propietario_secundario": "STS [Saesa]",
         "equipos_secundarios": "F1 - FT5 - JT5 [EGP]",
+        "contacto_secundario_enc": CONTACT_VAULT["C9"],
         "tipo_sscc": "",
         "plano": "planos/El Manzano.PNG"
     },
@@ -172,8 +203,9 @@ PLANTS_DATA = [
         "propietario_primario": "Enel Green Power",
         "equipos_primarios": "FT1 - HT1 - H1",
         "se_secundaria": "Punta Peuco [Polpaico]",
-        "propietario_secundario": "Punta Peuco (Polpaico)",
+        "propietario_secundario": "Chilquinta",
         "equipos_secundarios": "H2 [EGP]",
+        "contacto_secundario_enc": CONTACT_VAULT["C10"],
         "tipo_sscc": "CPF - CSF",
         "plano": "planos/Don Humberto.PNG"
     },
@@ -188,6 +220,7 @@ PLANTS_DATA = [
         "se_secundaria": "Calama nueva",
         "propietario_secundario": "CGE Transmisión",
         "equipos_secundarios": "H2",
+        "contacto_secundario_enc": CONTACT_VAULT["C11"],
         "tipo_sscc": "CTF",
         "plano": "planos/Valle de los vientos.PNG"
     },
@@ -202,6 +235,7 @@ PLANTS_DATA = [
         "se_secundaria": "Sierra Gorda Este",
         "propietario_secundario": "EnorChile [MSGE]",
         "equipos_secundarios": "J3 [EGP]",
+        "contacto_secundario_enc": CONTACT_VAULT["C3"],
         "nota_se_secundaria": "J3 reconexión automática deshabilitada",
         "radh_secundaria": "J3",
         "tipo_sscc": "CTF",
@@ -212,10 +246,12 @@ PLANTS_DATA = [
         "nombre": "PE- Taltal [102MW]",
         "se_primaria": "Taltal",
         "propietario_primario": "Enel Green Power",
-        "equipos_primarios": "FT1 - [J1 Transelec]",
+        "equipos_primarios": "FT1 - [J1 Transelec] - [F10 Minera Guanaco - RNE]",
+        "contacto_primario_enc": CONTACT_VAULT["C12"],
         "se_secundaria": "Jadresic",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "J8 - J9 - J7 [INT 1/2]",
+        "contacto_secundario_enc": CONTACT_VAULT["C13"],
         "tipo_sscc": "CTF",
         "plano": "planos/Taltal.PNG"
     },
@@ -228,6 +264,7 @@ PLANTS_DATA = [
         "se_secundaria": "Las Palmas",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "JG(JT1) [EGP]",
+        "contacto_secundario_enc": CONTACT_VAULT["C13"],
         "tipo_sscc": "CTF",
         "plano": "planos/Canela.PNG"
     },
@@ -240,6 +277,7 @@ PLANTS_DATA = [
         "se_secundaria": "Las Palmas",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "J2 [EGP]",
+        "contacto_secundario_enc": CONTACT_VAULT["C13"],
         "tipo_sscc": "CTF",
         "plano": "planos/Canela II.PNG"
     },
@@ -249,9 +287,11 @@ PLANTS_DATA = [
         "se_primaria": "Talinay",
         "propietario_primario": "Enel Green Power",
         "equipos_primarios": "M7 - J1 -JL - [JL2 PtaTalca - EnorChile]",
+        "contacto_primario_enc": CONTACT_VAULT["C3"],
         "se_secundaria": "La Cebada",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "J4",
+        "contacto_secundario_enc": CONTACT_VAULT["C13"],
         "tipo_sscc": "CTF",
         "plano": "planos/Talinay oriente.PNG"
     },
@@ -261,9 +301,11 @@ PLANTS_DATA = [
         "se_primaria": "Talinay",
         "propietario_primario": "Enel Green Power",
         "equipos_primarios": "FT2 - J2 -JL - [JL2 PtaTalca - EnorChile]",
+        "contacto_primario_enc": CONTACT_VAULT["C3"],
         "se_secundaria": "La Cebada",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "J4",
+        "contacto_secundario_enc": CONTACT_VAULT["C13"],
         "tipo_sscc": "CTF",
         "plano": "planos/Talinay poniente.PNG"
     },
@@ -276,6 +318,8 @@ PLANTS_DATA = [
         "se_secundaria": "Renaico",
         "propietario_secundario": "Enel Green Power",
         "equipos_secundarios": "JL2",
+        "esquema_parque": "EDAG ON ; ERAG ON REQUEST FROM ACCIONA",
+        "badge_esquema": "DAG on - RAG off",
         "tipo_sscc": "",
         "plano": "planos/La Cabaña.PNG"
     },
@@ -285,11 +329,12 @@ PLANTS_DATA = [
         "se_primaria": "Los Buenos Aires",
         "propietario_primario": "Enel Green Power",
         "equipos_primarios": "FT1 - BT1 - B1 - B2",
-        "nota_se_primaria": "B1/B2 reconexión automática deshabilitada",
+        "nota_se_primaria": "B1 y B2 reconexión automática habilitada",
         "radh_primaria": "B1/B2",
         "se_secundaria": "Los Angeles & Negrete",
         "propietario_secundario": "CGE Transmisión",
         "equipos_secundarios": "B4 & B1",
+        "contacto_secundario_enc": CONTACT_VAULT["C14"],
         "tipo_sscc": "CTF",
         "plano": "planos/Los buenos aires.PNG"
     },
@@ -304,8 +349,11 @@ PLANTS_DATA = [
         "se_secundaria": "Mulchén",
         "propietario_secundario": "Celeo Redes",
         "equipos_secundarios": "J7 [EGP]",
+        "contacto_secundario_enc": CONTACT_VAULT["C7"],
         "nota_se_secundaria": "J7 reconexión automática deshabilitada",
         "radh_secundaria": "J7",
+        "esquema_parque": "EDAG ON ; ERAG ON REQUEST FROM ACCIONA",
+        "badge_esquema": "DAG on - RAG off",
         "tipo_sscc": "CTF",
         "plano": "planos/Renaico I.PNG"
     },
@@ -318,6 +366,9 @@ PLANTS_DATA = [
         "se_secundaria": "Mulchén",
         "propietario_secundario": "Celeo Redes",
         "equipos_secundarios": "J7 [EGP]",
+        "contacto_secundario_enc": CONTACT_VAULT["C7"],
+        "esquema_parque": "EDAG ON ; ERAG ON REQUEST FROM ACCIONA",
+        "badge_esquema": "DAG on - RAG off",
         "tipo_sscc": "",
         "plano": "planos/Renaico II.PNG"
     },
@@ -342,8 +393,9 @@ PLANTS_DATA = [
         "propietario_primario": "Enel Green Power",
         "equipos_primarios": "FB1 - FB2 - FB3",
         "se_secundaria": "Punta Peuco [Polpaico]",
-        "propietario_secundario": "Polpaico",
+        "propietario_secundario": "Chilquinta",
         "equipos_secundarios": "H2",
+        "contacto_secundario_enc": CONTACT_VAULT["C10"],
         "tipo_sscc": "CPF - CSF",
         "plano": "planos/Bess Don Humberto.PNG"
     },
@@ -356,6 +408,7 @@ PLANTS_DATA = [
         "se_secundaria": "El Manzano",
         "propietario_secundario": "STS [Saesa]",
         "equipos_secundarios": "FT5 - JT5",
+        "contacto_secundario_enc": CONTACT_VAULT["C9"],
         "tipo_sscc": "CPF - CSF",
         "plano": "planos/Bess El Manzano.PNG"
     }
@@ -365,6 +418,25 @@ PLANTS_DATA = [
 # ======================================================================================
 # FUNCIONES AUXILIARES DE PROCESAMIENTO Y ESTILO
 # ======================================================================================
+def _verify_contact_password(pwd: str) -> bool:
+    """Verifica la contraseña de contactos sin almacenarla en texto plano."""
+    if not pwd or len(pwd) != 5:
+        return False
+    h1 = 5381
+    h2 = 9187
+    for ch in pwd:
+        c = ord(ch)
+        h1 = ((h1 * 33) + c) % 1000000007
+        h2 = ((h2 * 131) + c) % 1000000009
+    return h1 == 680689064 and h2 == 555869608
+
+
+def _decrypt_contact(enc_arr: list, pwd: str) -> str:
+    """Descifra el texto de contacto únicamente si la contraseña es válida."""
+    if not enc_arr or not _verify_contact_password(pwd):
+        return ""
+    k_len = len(pwd)
+    return "".join(chr(val - ord(pwd[i % k_len])) for i, val in enumerate(enc_arr))
 def _get_image_path(rel_path: str) -> str:
     """Resuelve de forma robusta la ruta absoluta de las imágenes PNG en /planos."""
     if not rel_path:
@@ -528,7 +600,7 @@ def render_ayuda_memoria():
     )
 
     # ------------------ FILTROS Y BÚSQUEDA ------------------
-    col_filter, col_search = st.columns([1.5, 2.5])
+    col_filter, col_search, col_pwd = st.columns([1.5, 1.8, 0.9])
 
     with col_filter:
         tech_filter = st.radio(
@@ -559,6 +631,16 @@ def render_ayuda_memoria():
             key="ernc_search_input"
         ).strip().lower()
 
+    with col_pwd:
+        contact_pwd = st.text_input(
+            "🔒 Clave Contactos:",
+            type="password",
+            placeholder="Contraseña...",
+            key="ernc_contact_pwd"
+        ).strip()
+
+    contacts_unlocked = _verify_contact_password(contact_pwd)
+
     # Filtrar por texto de búsqueda
     if search_query:
         matching_plants = [
@@ -575,6 +657,9 @@ def render_ayuda_memoria():
             or search_query in p.get("nota_se_secundaria", "").lower()
             or search_query in p.get("radh_primaria", "").lower()
             or search_query in p.get("radh_secundaria", "").lower()
+            or (contacts_unlocked and search_query in _decrypt_contact(p.get("contacto_primario_enc"), contact_pwd).lower())
+            or (contacts_unlocked and search_query in _decrypt_contact(p.get("contacto_secundario_enc"), contact_pwd).lower())
+            or search_query in p.get("esquema_parque", "").lower()
         ]
     else:
         matching_plants = sub_plants
@@ -592,6 +677,9 @@ def render_ayuda_memoria():
     )
 
     plant = next((p for p in matching_plants if p["nombre"] == selected_plant_name), matching_plants[0])
+    contacto_prim_str = _decrypt_contact(plant.get("contacto_primario_enc"), contact_pwd) if contacts_unlocked else ""
+    contacto_sec_str = _decrypt_contact(plant.get("contacto_secundario_enc"), contact_pwd) if contacts_unlocked else ""
+    contacto_sec_html = "<br>".join(contacto_sec_str.split("\n")) if contacto_sec_str else ""
 
     # Propiedades dinámicas según tecnología
     mw = _extract_mw(plant["nombre"])
@@ -624,9 +712,25 @@ def render_ayuda_memoria():
                         <span style="background:rgba(255,255,255,0.22); padding:2px 10px; border-radius:12px; font-size:11px; font-weight:700; letter-spacing:0.5px;">
                             {tech_label}
                         </span>
-                        <h3 style="margin:4px 0 0 0; font-size:22px; font-weight:800; color:#ffffff;">
-                            {clean_title}
-                        </h3>
+                        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:4px;">
+                            <h3 style="margin:0; font-size:22px; font-weight:800; color:#ffffff;">
+                                {clean_title}
+                            </h3>
+                            {f'<span style="background:{tech_color}; color:#ffffff; border:1.5px solid #ffffff; padding:3px 10px; border-radius:10px; font-size:12px; font-weight:700; font-family: Arial, sans-serif;">{plant["badge_esquema"]}</span>' if plant.get("badge_esquema") else ''}
+                            {f'<span style="background:{tech_color}; color:#ffffff; border:1.5px solid #ffffff; padding:3px 10px; border-radius:10px; font-size:12px; font-weight:700; font-family: Arial, sans-serif;">{plant["tipo_sscc"]}</span>' if plant.get("tipo_sscc") else ''}
+                        </div>
+                        <div style="margin-top:6px; font-size:13px; color:rgba(255,255,255,0.9); display:flex; align-items:flex-start; gap:8px; flex-wrap:wrap;">
+                            <span>Interconexión SEN &bull;</span>
+                            <span style="display:inline-flex; flex-direction:column; align-items:center; gap:4px;">
+                                <span>S/E {plant['se_primaria']}</span>
+                                {f'<span style="background:{tech_color}; color:#ffffff; border:1.5px solid #ffffff; padding:1px 8px; border-radius:8px; font-size:11px; font-weight:700; font-family: Arial, sans-serif;">{plant["radh_primaria"]}</span>' if plant.get("radh_primaria") else ''}
+                            </span>
+                            <span>&rarr;</span>
+                            <span style="display:inline-flex; flex-direction:column; align-items:center; gap:4px;">
+                                <span>S/E {plant['se_secundaria']}</span>
+                                {f'<span style="background:{tech_color}; color:#ffffff; border:1.5px solid #ffffff; padding:1px 8px; border-radius:8px; font-size:11px; font-weight:700; font-family: Arial, sans-serif;">{plant["radh_secundaria"]}</span>' if plant.get("radh_secundaria") else ''}
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div style="display:flex; gap:8px; align-items:center;">
@@ -654,6 +758,7 @@ def render_ayuda_memoria():
                 </div>
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:13px; font-weight:600; color:#1e293b;">
                     <span>📍 <strong>Planta:</strong> {clean_title} ({mw})</span>
+                    {f'<span style="background:#fffbeb; color:#92400e; border:1px solid #fcd34d; padding:3px 8px; border-radius:6px; font-size:11px; font-weight:700; font-family: Arial, sans-serif;">{plant["esquema_parque"]}</span>' if plant.get("esquema_parque") else ''}
                     <span style="color:#94a3b8;">➔</span>
                     <span>🔌 <strong>S/E Primaria:</strong> S/E {plant['se_primaria']}</span>
                     <span style="color:#94a3b8;">════ LÍNEA ════➔</span>
@@ -680,8 +785,13 @@ def render_ayuda_memoria():
                     <div>
                         {_format_equipos_badges(plant['equipos_primarios'])}
                     </div>
-                    {f'''<div style="margin-top:8px; padding:6px 10px; border-radius:8px; background:#fffbeb; border:1px solid #fde68a; color:#92400e; font-size:12px; font-weight:600;">
-                        <span>{plant.get('nota_se_primaria') or (plant['radh_primaria'] + ' reconexión automática deshabilitada')}</span>
+                    {f'''<div style="margin-top:8px; padding:7px 10px; border-radius:8px; background:#eff6ff; border:1px solid #bfdbfe; color:#1e3a8a; font-size:12px; font-family: Arial, sans-serif;">
+                        <strong>Contacto:</strong> <span>{contacto_prim_str}</span>
+                    </div>''' if (plant.get('contacto_primario_enc') and contacts_unlocked) else ('''<div style="margin-top:8px; padding:7px 10px; border-radius:8px; background:#f1f5f9; border:1px solid #cbd5e1; color:#475569; font-size:12px; font-family: Arial, sans-serif;">
+                        🔒 <strong>Contacto protegido</strong> (ingrese clave arriba)
+                    </div>''' if plant.get('contacto_primario_enc') else '')}
+                    {f'''<div style="margin-top:8px; padding:6px 10px; border-radius:8px; background:{'#fffbeb' if 'deshabilitada' in (plant.get('nota_se_primaria') or '').lower() else '#f0fdf4'}; border:1px solid {'#fde68a' if 'deshabilitada' in (plant.get('nota_se_primaria') or '').lower() else '#bbf7d0'}; color:{'#92400e' if 'deshabilitada' in (plant.get('nota_se_primaria') or '').lower() else '#166534'}; font-size:12px; font-weight:600;">
+                        <span>{plant.get('nota_se_primaria') or (plant['radh_primaria'] + ' reconexión automática')}</span>
                     </div>''' if (plant.get('nota_se_primaria') or plant.get('radh_primaria')) else ''}
                 </div>
 
@@ -701,8 +811,13 @@ def render_ayuda_memoria():
                     <div>
                         {_format_equipos_badges(plant['equipos_secundarios'])}
                     </div>
-                    {f'''<div style="margin-top:8px; padding:6px 10px; border-radius:8px; background:#fffbeb; border:1px solid #fde68a; color:#92400e; font-size:12px; font-weight:600;">
-                        <span>{plant.get('nota_se_secundaria') or (plant['radh_secundaria'] + ' reconexión automática deshabilitada')}</span>
+                    {f'''<div style="margin-top:8px; padding:7px 10px; border-radius:8px; background:#eff6ff; border:1px solid #bfdbfe; color:#1e3a8a; font-size:12px; font-family: Arial, sans-serif;">
+                        <strong>Contacto:</strong> <span>{contacto_sec_html}</span>
+                    </div>''' if (plant.get('contacto_secundario_enc') and contacts_unlocked) else ('''<div style="margin-top:8px; padding:7px 10px; border-radius:8px; background:#f1f5f9; border:1px solid #cbd5e1; color:#475569; font-size:12px; font-family: Arial, sans-serif;">
+                        🔒 <strong>Contacto protegido</strong> (ingrese clave arriba)
+                    </div>''' if plant.get('contacto_secundario_enc') else '')}
+                    {f'''<div style="margin-top:8px; padding:6px 10px; border-radius:8px; background:{'#fffbeb' if 'deshabilitada' in (plant.get('nota_se_secundaria') or '').lower() else '#f0fdf4'}; border:1px solid {'#fde68a' if 'deshabilitada' in (plant.get('nota_se_secundaria') or '').lower() else '#bbf7d0'}; color:{'#92400e' if 'deshabilitada' in (plant.get('nota_se_secundaria') or '').lower() else '#166534'}; font-size:12px; font-weight:600;">
+                        <span>{plant.get('nota_se_secundaria') or (plant['radh_secundaria'] + ' reconexión automática')}</span>
                     </div>''' if (plant.get('nota_se_secundaria') or plant.get('radh_secundaria')) else ''}
                 </div>
 
@@ -768,7 +883,7 @@ def render_ayuda_memoria():
                     <span title="BESS">🔋</span>
                 </div>
                 <div style="font-weight:600; font-size:12px; color:#334155;">
-                    Creado por <strong style="color:#0f172a;">MichaelNB</strong> &amp; <strong style="color:#0f172a;">IA Gemini</strong>
+                    <strong style="color:#0f172a;">By Michael NB - &gamma;</strong>
                 </div>
             </div>
         </div>
