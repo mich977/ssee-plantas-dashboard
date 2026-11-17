@@ -1,0 +1,116 @@
+Private Sub UserForm_Initialize()
+    Dim hoja As Worksheet
+    Dim ultimaFila As Long
+    Dim i As Long
+    
+    ' Usamos el nombre directo del objeto de Excel para que no falle jamás
+    Set hoja = Hoja1
+    
+    ultimaFila = hoja.Cells(hoja.Rows.Count, "B").End(xlUp).Row
+    Me.lstProyectos.Clear
+    
+    For i = 2 To ultimaFila
+        If hoja.Cells(i, 2).Value <> "" Then
+            Me.lstProyectos.AddItem hoja.Cells(i, 2).Value
+        End If
+    Next i
+    
+    ' Apaga todos los iconos de la pantalla al iniciar para que esté limpio
+    Me.imgIconoSolar.Visible = False
+    Me.imgIconoWind.Visible = False
+    Me.imgIconoBESS.Visible = False
+    Me.lblTipoSSCC.Caption = ""
+End Sub
+
+Private Sub lstProyectos_Click()
+    Dim hoja As Worksheet
+    Dim ultimaFila As Long
+    Dim i As Long
+    Dim plantaSeleccionada As String
+    Dim encontrada As Boolean
+    Dim tecnologia As String
+    
+    If Me.lstProyectos.ListIndex = -1 Then Exit Sub
+    plantaSeleccionada = Trim(Me.lstProyectos.Value)
+    
+    Set hoja = ThisWorkbook.Sheets("Datos_Plantas")
+    ultimaFila = hoja.Cells(hoja.Rows.Count, "B").End(xlUp).Row
+    encontrada = False
+    
+    For i = 2 To ultimaFila
+        If Trim(hoja.Cells(i, 2).Value) = plantaSeleccionada Then
+            
+            ' 1. ASIGNACIÓN DE TEXTOS ESTÁNDAR EN EL DASHBOARD
+            Me.lblNombrePlanta.Caption = hoja.Cells(i, 2).Value
+            
+            Me.lblSEPrimaria.Caption = "S/E Primaria: " & hoja.Cells(i, 3).Value
+            Me.lblPropietarioPrimario.Caption = "Propietario: " & hoja.Cells(i, 4).Value
+            Me.lblEquiposPrimarios.Caption = "Equipos EGP: " & hoja.Cells(i, 5).Value
+            
+            Me.lblSESecundaria.Caption = "S/E Secundaria: " & hoja.Cells(i, 6).Value
+            Me.lblPropietarioSecundario.Caption = "Propietario: " & hoja.Cells(i, 7).Value
+            Me.lblEquiposSecundarios.Caption = "Equipos: " & hoja.Cells(i, 8).Value
+            
+            ' --- COLUMNA I: Mapeo dinámico de Tipo_SSCC ---
+            If hoja.Cells(i, 9).Value <> "" Then
+                Me.lblTipoSSCC.Caption = "Tipo SSCC: " & hoja.Cells(i, 9).Value
+            Else
+                Me.lblTipoSSCC.Caption = "Tipo SSCC: No registra"
+            End If
+            
+            ' Extraemos el texto de la columna A para evaluar la tecnología
+            tecnologia = LCase(Trim(hoja.Cells(i, 1).Value))
+            
+            ' 2. CONTROL GRÁFICO INTELIGENTE (COLORES Y VISIBILIDAD DE ICONOS FIJOS)
+            If InStr(tecnologia, "sol") > 0 Or plantaSeleccionada Like "PFV*" Then
+                ' --- MODO SOLAR (Barra Naranja) ---
+                Me.lblNombrePlanta.BackColor = RGB(242, 142, 43)
+                Me.lblNombrePlanta.ForeColor = RGB(255, 255, 255)
+                
+                ' Enciende Solar, apaga el resto
+                Me.imgIconoSolar.Visible = True
+                Me.imgIconoWind.Visible = False
+                Me.imgIconoBESS.Visible = False
+                
+            ElseIf InStr(tecnologia, "wind") > 0 Or InStr(tecnologia, "eol") > 0 Or InStr(tecnologia, "viento") > 0 Or plantaSeleccionada Like "PE*" Then
+                ' --- MODO WIND (Barra Verde) ---
+                Me.lblNombrePlanta.BackColor = RGB(34, 139, 34)
+                Me.lblNombrePlanta.ForeColor = RGB(255, 255, 255)
+                
+                ' Enciende Wind, apaga el resto
+                Me.imgIconoSolar.Visible = False
+                Me.imgIconoWind.Visible = True
+                Me.imgIconoBESS.Visible = False
+                
+            ElseIf InStr(tecnologia, "bess") > 0 Or plantaSeleccionada Like "BESS*" Then
+                ' --- MODO BESS / ALMACENAMIENTO (Barra Gris Azulado Corporativo) ---
+                Me.lblNombrePlanta.BackColor = RGB(52, 73, 94)
+                Me.lblNombrePlanta.ForeColor = RGB(255, 255, 255)
+                
+                ' Enciende BESS, apaga el resto
+                Me.imgIconoSolar.Visible = False
+                Me.imgIconoWind.Visible = False
+                Me.imgIconoBESS.Visible = True
+                
+            Else
+                ' --- MODO GENÉRICO (Barra Gris por defecto si no reconoce la tecnología) ---
+                Me.lblNombrePlanta.BackColor = RGB(128, 128, 128)
+                Me.lblNombrePlanta.ForeColor = RGB(255, 255, 255)
+                
+                ' Apaga todos los iconos
+                Me.imgIconoSolar.Visible = False
+                Me.imgIconoWind.Visible = False
+                Me.imgIconoBESS.Visible = False
+            End If
+            
+            encontrada = True
+            Exit For
+        End If
+    Next i
+End Sub
+
+' Evento de seguridad para guardar automáticamente de forma invisible y cerrar Excel por completo
+Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
+    ThisWorkbook.Save
+    Application.Quit
+End Sub

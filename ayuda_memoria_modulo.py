@@ -53,6 +53,7 @@ PLANTS_DATA = [
         "se_primaria": "Chi Chiu",
         "propietario_primario": "Acciona",
         "equipos_primarios": "FT3 - HT3 - [H1 - H2 Acciona]",
+        "info_primaria": "Requiere SODI para ingreso a S/E u operación de 52H1 y 52H2.",
         "se_secundaria": "Calama nueva",
         "propietario_secundario": "Acciona",
         "equipos_secundarios": "H3",
@@ -69,6 +70,7 @@ PLANTS_DATA = [
         "se_secundaria": "Encuentro",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "J16 [EGP]",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C2"],
         "tipo_sscc": "",
         "plano": "planos/Finis Terrae.PNG"
@@ -82,6 +84,7 @@ PLANTS_DATA = [
         "se_secundaria": "Arena",
         "propietario_secundario": "EnorChile",
         "equipos_secundarios": "J2",
+        "info_secundaria": "Requiere SODI para operación de 52J2",
         "contacto_secundario_enc": CONTACT_VAULT["C3"],
         "tipo_sscc": "",
         "plano": "planos/Lalackama.PNG"
@@ -95,6 +98,7 @@ PLANTS_DATA = [
         "se_secundaria": "Centinela",
         "propietario_secundario": "Redinter",
         "equipos_secundarios": "J10 - J11 - J12 [INT 1/2]",
+        "info_secundaria": "Requiere SODI para operación de 52J10, 52J11 o 52J12",
         "contacto_secundario_enc": CONTACT_VAULT["C4"],
         "tipo_sscc": "CPF",
         "plano": "planos/Las Salinas.PNG"
@@ -108,6 +112,7 @@ PLANTS_DATA = [
         "se_secundaria": "Andes",
         "propietario_secundario": "AES Andes",
         "equipos_secundarios": "J12 [EGP]",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C5"],
         "tipo_sscc": "",
         "plano": "planos/Sol de Lila.PNG"
@@ -121,6 +126,7 @@ PLANTS_DATA = [
         "se_secundaria": "Miraje",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "J1 - J2 - J3 [INT 1/2]",
+        "info_secundaria": "Requiere SODI para operación de 52J1, 52J2 o 52J3",
         "contacto_secundario_enc": CONTACT_VAULT["C6"],
         "tipo_sscc": "",
         "plano": "planos/Valle del sol.PNG"
@@ -134,6 +140,7 @@ PLANTS_DATA = [
         "se_secundaria": "Illapa",
         "propietario_secundario": "Celeo Redes",
         "equipos_secundarios": "J15 [EGP] - J14 -J13 [Colbún] [INT 1/2]",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C7"],
         "nota_se_secundaria": "J15 reconexión automática deshabilitada",
         "radh_secundaria": "J15",
@@ -151,6 +158,7 @@ PLANTS_DATA = [
         "se_secundaria": "Carrera Pinto",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "J17 - J18 [EGP]",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C6"],
         "nota_se_secundaria": "J17/J18 reconexión automática deshabilitada",
         "radh_secundaria": "J17/J18",
@@ -166,6 +174,7 @@ PLANTS_DATA = [
         "se_secundaria": "Diego de Almagro",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "H9",
+        "info_secundaria": "Requiere SODI para operación de 52H9",
         "contacto_secundario_enc": CONTACT_VAULT["C6"],
         "tipo_sscc": "",
         "plano": "planos/Chañares.PNG"
@@ -192,6 +201,7 @@ PLANTS_DATA = [
         "se_secundaria": "El Manzano",
         "propietario_secundario": "STS [Saesa]",
         "equipos_secundarios": "F1 - FT5 - JT5 [EGP]",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C9"],
         "tipo_sscc": "",
         "plano": "planos/El Manzano.PNG"
@@ -205,6 +215,7 @@ PLANTS_DATA = [
         "se_secundaria": "Punta Peuco [Polpaico]",
         "propietario_secundario": "Chilquinta",
         "equipos_secundarios": "H2 [EGP]",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C10"],
         "tipo_sscc": "CPF - CSF",
         "plano": "planos/Don Humberto.PNG"
@@ -217,6 +228,7 @@ PLANTS_DATA = [
         "se_primaria": "Valle de los vientos",
         "propietario_primario": "Enel Green Power",
         "equipos_primarios": "ET1 - ET2 - [HT1 - HT2 - HL1 CGE]",
+        "info_primaria": "Requiere SODI para ingreso a S/E u operación de 52HT1, 52HT2 y 52HL1",
         "se_secundaria": "Calama nueva",
         "propietario_secundario": "CGE Transmisión",
         "equipos_secundarios": "H2",
@@ -235,6 +247,7 @@ PLANTS_DATA = [
         "se_secundaria": "Sierra Gorda Este",
         "propietario_secundario": "EnorChile [MSGE]",
         "equipos_secundarios": "J3 [EGP]",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C3"],
         "nota_se_secundaria": "J3 reconexión automática deshabilitada",
         "radh_secundaria": "J3",
@@ -247,6 +260,7 @@ PLANTS_DATA = [
         "se_primaria": "Taltal",
         "propietario_primario": "Enel Green Power",
         "equipos_primarios": "FT1 - [J1 Transelec] - [F10 Minera Guanaco - RNE]",
+        "info_primaria": "Requiere SODI para operación de 52J1 o 52F10",
         "contacto_primario_enc": CONTACT_VAULT["C12"],
         "se_secundaria": "Jadresic",
         "propietario_secundario": "Transelec",
@@ -264,6 +278,7 @@ PLANTS_DATA = [
         "se_secundaria": "Las Palmas",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "JG(JT1) [EGP]",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C13"],
         "tipo_sscc": "CTF",
         "plano": "planos/Canela.PNG"
@@ -277,6 +292,7 @@ PLANTS_DATA = [
         "se_secundaria": "Las Palmas",
         "propietario_secundario": "Transelec",
         "equipos_secundarios": "J2 [EGP]",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C13"],
         "tipo_sscc": "CTF",
         "plano": "planos/Canela II.PNG"
@@ -287,10 +303,11 @@ PLANTS_DATA = [
         "se_primaria": "Talinay",
         "propietario_primario": "Enel Green Power",
         "equipos_primarios": "M7 - J1 -JL - [JL2 PtaTalca - EnorChile]",
+        "info_primaria": "Requiere SODI para operación de 52JL2",
         "contacto_primario_enc": CONTACT_VAULT["C3"],
-        "se_secundaria": "La Cebada",
+        "se_secundaria": "La Cebada & Pan de Azúcar",
         "propietario_secundario": "Transelec",
-        "equipos_secundarios": "J4",
+        "equipos_secundarios": "J4 & J4",
         "contacto_secundario_enc": CONTACT_VAULT["C13"],
         "tipo_sscc": "CTF",
         "plano": "planos/Talinay oriente.PNG"
@@ -301,10 +318,11 @@ PLANTS_DATA = [
         "se_primaria": "Talinay",
         "propietario_primario": "Enel Green Power",
         "equipos_primarios": "FT2 - J2 -JL - [JL2 PtaTalca - EnorChile]",
+        "info_primaria": "Requiere SODI para operación de 52JL2",
         "contacto_primario_enc": CONTACT_VAULT["C3"],
-        "se_secundaria": "La Cebada",
+        "se_secundaria": "La Cebada & Pan de Azúcar",
         "propietario_secundario": "Transelec",
-        "equipos_secundarios": "J4",
+        "equipos_secundarios": "J4 & J4",
         "contacto_secundario_enc": CONTACT_VAULT["C13"],
         "tipo_sscc": "CTF",
         "plano": "planos/Talinay poniente.PNG"
@@ -349,6 +367,7 @@ PLANTS_DATA = [
         "se_secundaria": "Mulchén",
         "propietario_secundario": "Celeo Redes",
         "equipos_secundarios": "J7 [EGP]",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C7"],
         "nota_se_secundaria": "J7 reconexión automática deshabilitada",
         "radh_secundaria": "J7",
@@ -366,6 +385,7 @@ PLANTS_DATA = [
         "se_secundaria": "Mulchén",
         "propietario_secundario": "Celeo Redes",
         "equipos_secundarios": "J7 [EGP]",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C7"],
         "esquema_parque": "EDAG ON ; ERAG ON REQUEST FROM ACCIONA",
         "badge_esquema": "DAG on - RAG off",
@@ -395,6 +415,7 @@ PLANTS_DATA = [
         "se_secundaria": "Punta Peuco [Polpaico]",
         "propietario_secundario": "Chilquinta",
         "equipos_secundarios": "H2",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C10"],
         "tipo_sscc": "CPF - CSF",
         "plano": "planos/Bess Don Humberto.PNG"
@@ -408,6 +429,7 @@ PLANTS_DATA = [
         "se_secundaria": "El Manzano",
         "propietario_secundario": "STS [Saesa]",
         "equipos_secundarios": "FT5 - JT5",
+        "info_secundaria": "Requiere SODI para ingreso a S/E",
         "contacto_secundario_enc": CONTACT_VAULT["C9"],
         "tipo_sscc": "CPF - CSF",
         "plano": "planos/Bess El Manzano.PNG"
@@ -785,6 +807,9 @@ def render_ayuda_memoria():
                     <div>
                         {_format_equipos_badges(plant['equipos_primarios'])}
                     </div>
+                    {f'''<div style="margin-top:8px; padding:7px 10px; border-radius:8px; background:#fffbeb; border:1px solid #fcd34d; color:#92400e; font-size:12px; font-weight:600; font-family: Arial, sans-serif;">
+                        <span>{plant['info_primaria']}</span>
+                    </div>''' if plant.get('info_primaria') else ''}
                     {f'''<div style="margin-top:8px; padding:7px 10px; border-radius:8px; background:#eff6ff; border:1px solid #bfdbfe; color:#1e3a8a; font-size:12px; font-family: Arial, sans-serif;">
                         <strong>Contacto:</strong> <span>{contacto_prim_str}</span>
                     </div>''' if (plant.get('contacto_primario_enc') and contacts_unlocked) else ('''<div style="margin-top:8px; padding:7px 10px; border-radius:8px; background:#f1f5f9; border:1px solid #cbd5e1; color:#475569; font-size:12px; font-family: Arial, sans-serif;">
@@ -811,6 +836,9 @@ def render_ayuda_memoria():
                     <div>
                         {_format_equipos_badges(plant['equipos_secundarios'])}
                     </div>
+                    {f'''<div style="margin-top:8px; padding:7px 10px; border-radius:8px; background:#fffbeb; border:1px solid #fcd34d; color:#92400e; font-size:12px; font-weight:600; font-family: Arial, sans-serif;">
+                        <span>{plant['info_secundaria']}</span>
+                    </div>''' if plant.get('info_secundaria') else ''}
                     {f'''<div style="margin-top:8px; padding:7px 10px; border-radius:8px; background:#eff6ff; border:1px solid #bfdbfe; color:#1e3a8a; font-size:12px; font-family: Arial, sans-serif;">
                         <strong>Contacto:</strong> <span>{contacto_sec_html}</span>
                     </div>''' if (plant.get('contacto_secundario_enc') and contacts_unlocked) else ('''<div style="margin-top:8px; padding:7px 10px; border-radius:8px; background:#f1f5f9; border:1px solid #cbd5e1; color:#475569; font-size:12px; font-family: Arial, sans-serif;">

@@ -470,6 +470,10 @@
                   <div id="lblEquiposPrimarios" class="text-sm font-semibold font-mono text-slate-900 dark:text-white bg-white dark:bg-slate-900/90 p-3 rounded-lg border border-slate-200 dark:border-slate-700/80 break-words">
                     FT3 - HT3 - [H1 - H2 Acciona]
                   </div>
+                  <!-- Substation Additional Operational Info (SODI / Maniobras) -->
+                  <div id="infoPrimariaContainer" class="mt-2.5 hidden">
+                    <!-- Injected via JavaScript -->
+                  </div>
                   <!-- Substation Contact Info Container -->
                   <div id="contactoPrimarioContainer" class="mt-2.5 hidden">
                     <!-- Injected via JavaScript -->
@@ -545,6 +549,10 @@
                   </div>
                   <div id="lblEquiposSecundarios" class="text-sm font-semibold font-mono text-slate-900 dark:text-white bg-white dark:bg-slate-900/90 p-3 rounded-lg border border-slate-200 dark:border-slate-700/80 break-words">
                     H3
+                  </div>
+                  <!-- Substation Additional Operational Info (SODI / Maniobras) -->
+                  <div id="infoSecundariaContainer" class="mt-2.5 hidden">
+                    <!-- Injected via JavaScript -->
                   </div>
                   <!-- Substation Contact Info Container -->
                   <div id="contactoSecundarioContainer" class="mt-2.5 hidden">
@@ -882,9 +890,9 @@
       </div>
 
       <!-- Canvas / Viewport Container -->
-      <div id="diagramViewport" class="flex-1 overflow-auto bg-slate-950/95 relative flex items-center justify-center p-4 cursor-grab active:cursor-grabbing select-none">
+      <div id="diagramViewport" class="flex-1 overflow-hidden bg-slate-950/95 relative flex items-center justify-center p-4 cursor-grab active:cursor-grabbing select-none" style="touch-action: none;">
         <div id="diagramWrapper" class="transition-transform duration-150 ease-out origin-center">
-          <img id="diagramImage" src="" alt="Diagrama Unilineal" class="max-w-full max-h-[78vh] w-auto h-auto object-contain rounded-lg shadow-2xl bg-white border border-slate-200">
+          <img id="diagramImage" src="" alt="Diagrama Unilineal" draggable="false" class="max-w-full max-h-[78vh] w-auto h-auto object-contain rounded-lg shadow-2xl bg-white border border-slate-200 pointer-events-none select-none">
         </div>
       </div>
 
@@ -942,6 +950,7 @@
         se_primaria: "Chi Chiu",
         propietario_primario: "Acciona",
         equipos_primarios: "FT3 - HT3 - [H1 - H2 Acciona]",
+        info_primaria: "Requiere SODI para ingreso a S/E u operación de 52H1 y 52H2.",
         se_secundaria: "Calama nueva",
         propietario_secundario: "Acciona",
         equipos_secundarios: "H3",
@@ -958,6 +967,7 @@
         se_secundaria: "Encuentro",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J16 [EGP]",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C2,
         tipo_sscc: "",
         plano: "planos/Finis Terrae.PNG"
@@ -971,6 +981,7 @@
         se_secundaria: "Arena",
         propietario_secundario: "EnorChile",
         equipos_secundarios: "J2",
+        info_secundaria: "Requiere SODI para operación de 52J2",
         contacto_secundario_enc: CONTACT_VAULT.C3,
         tipo_sscc: "",
         plano: "planos/Lalackama.PNG"
@@ -984,6 +995,7 @@
         se_secundaria: "Centinela",
         propietario_secundario: "Redinter",
         equipos_secundarios: "J10 - J11 - J12 [INT 1/2]",
+        info_secundaria: "Requiere SODI para operación de 52J10, 52J11 o 52J12",
         contacto_secundario_enc: CONTACT_VAULT.C4,
         tipo_sscc: "CPF",
         plano: "planos/Las Salinas.PNG"
@@ -997,6 +1009,7 @@
         se_secundaria: "Andes",
         propietario_secundario: "AES Andes",
         equipos_secundarios: "J12 [EGP]",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C5,
         tipo_sscc: "",
         plano: "planos/Sol de Lila.PNG"
@@ -1010,6 +1023,7 @@
         se_secundaria: "Miraje",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J1 - J2 - J3 [INT 1/2]",
+        info_secundaria: "Requiere SODI para operación de 52J1, 52J2 o 52J3",
         contacto_secundario_enc: CONTACT_VAULT.C6,
         tipo_sscc: "",
         plano: "planos/Valle del sol.PNG"
@@ -1023,6 +1037,7 @@
         se_secundaria: "Illapa",
         propietario_secundario: "Celeo Redes",
         equipos_secundarios: "J15 [EGP] - J14 -J13 [Colbún] [INT 1/2]",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C7,
         nota_se_secundaria: "J15 reconexión automática deshabilitada",
         radh_secundaria: "J15",
@@ -1040,6 +1055,7 @@
         se_secundaria: "Carrera Pinto",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J17 - J18 [EGP]",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C6,
         nota_se_secundaria: "J17/J18 reconexión automática deshabilitada",
         radh_secundaria: "J17/J18",
@@ -1055,6 +1071,7 @@
         se_secundaria: "Diego de Almagro",
         propietario_secundario: "Transelec",
         equipos_secundarios: "H9",
+        info_secundaria: "Requiere SODI para operación de 52H9",
         contacto_secundario_enc: CONTACT_VAULT.C6,
         tipo_sscc: "",
         plano: "planos/Chañares.PNG"
@@ -1081,6 +1098,7 @@
         se_secundaria: "El Manzano",
         propietario_secundario: "STS [Saesa]",
         equipos_secundarios: "F1 - FT5 - JT5 [EGP]",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C9,
         tipo_sscc: "",
         plano: "planos/El Manzano.PNG"
@@ -1094,6 +1112,7 @@
         se_secundaria: "Punta Peuco [Polpaico]",
         propietario_secundario: "Chilquinta",
         equipos_secundarios: "H2 [EGP]",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C10,
         tipo_sscc: "CPF - CSF",
         plano: "planos/Don Humberto.PNG"
@@ -1104,6 +1123,7 @@
         se_primaria: "Valle de los vientos",
         propietario_primario: "Enel Green Power",
         equipos_primarios: "ET1 - ET2 - [HT1 - HT2 - HL1 CGE]",
+        info_primaria: "Requiere SODI para ingreso a S/E u operación de 52HT1, 52HT2 y 52HL1",
         se_secundaria: "Calama nueva",
         propietario_secundario: "CGE Transmisión",
         equipos_secundarios: "H2",
@@ -1122,6 +1142,7 @@
         se_secundaria: "Sierra Gorda Este",
         propietario_secundario: "EnorChile [MSGE]",
         equipos_secundarios: "J3 [EGP]",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C3,
         nota_se_secundaria: "J3 reconexión automática deshabilitada",
         radh_secundaria: "J3",
@@ -1134,6 +1155,7 @@
         se_primaria: "Taltal",
         propietario_primario: "Enel Green Power",
         equipos_primarios: "FT1 - [J1 Transelec] - [F10 Minera Guanaco - RNE]",
+        info_primaria: "Requiere SODI para operación de 52J1 o 52F10",
         contacto_primario_enc: CONTACT_VAULT.C12,
         se_secundaria: "Jadresic",
         propietario_secundario: "Transelec",
@@ -1151,6 +1173,7 @@
         se_secundaria: "Las Palmas",
         propietario_secundario: "Transelec",
         equipos_secundarios: "JG(JT1) [EGP]",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C13,
         tipo_sscc: "CTF",
         plano: "planos/Canela.PNG"
@@ -1164,6 +1187,7 @@
         se_secundaria: "Las Palmas",
         propietario_secundario: "Transelec",
         equipos_secundarios: "J2 [EGP]",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C13,
         tipo_sscc: "CTF",
         plano: "planos/Canela II.PNG"
@@ -1174,10 +1198,11 @@
         se_primaria: "Talinay",
         propietario_primario: "Enel Green Power",
         equipos_primarios: "M7 - J1 -JL - [JL2 PtaTalca - EnorChile]",
+        info_primaria: "Requiere SODI para operación de 52JL2",
         contacto_primario_enc: CONTACT_VAULT.C3,
-        se_secundaria: "La Cebada",
+        se_secundaria: "La Cebada & Pan de Azúcar",
         propietario_secundario: "Transelec",
-        equipos_secundarios: "J4",
+        equipos_secundarios: "J4 & J4",
         contacto_secundario_enc: CONTACT_VAULT.C13,
         tipo_sscc: "CTF",
         plano: "planos/Talinay oriente.PNG"
@@ -1188,10 +1213,11 @@
         se_primaria: "Talinay",
         propietario_primario: "Enel Green Power",
         equipos_primarios: "FT2 - J2 -JL - [JL2 PtaTalca - EnorChile]",
+        info_primaria: "Requiere SODI para operación de 52JL2",
         contacto_primario_enc: CONTACT_VAULT.C3,
-        se_secundaria: "La Cebada",
+        se_secundaria: "La Cebada & Pan de Azúcar",
         propietario_secundario: "Transelec",
-        equipos_secundarios: "J4",
+        equipos_secundarios: "J4 & J4",
         contacto_secundario_enc: CONTACT_VAULT.C13,
         tipo_sscc: "CTF",
         plano: "planos/Talinay poniente.PNG"
@@ -1236,6 +1262,7 @@
         se_secundaria: "Mulchén",
         propietario_secundario: "Celeo Redes",
         equipos_secundarios: "J7 [EGP]",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C7,
         nota_se_secundaria: "J7 reconexión automática deshabilitada",
         radh_secundaria: "J7",
@@ -1253,6 +1280,7 @@
         se_secundaria: "Mulchén",
         propietario_secundario: "Celeo Redes",
         equipos_secundarios: "J7 [EGP]",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C7,
         esquema_parque: "EDAG ON ; ERAG ON REQUEST FROM ACCIONA",
         badge_esquema: "DAG on - RAG off",
@@ -1280,6 +1308,7 @@
         se_secundaria: "Punta Peuco [Polpaico]",
         propietario_secundario: "Chilquinta",
         equipos_secundarios: "H2",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C10,
         tipo_sscc: "CPF - CSF",
         plano: "planos/Bess Don Humberto.PNG"
@@ -1293,6 +1322,7 @@
         se_secundaria: "El Manzano",
         propietario_secundario: "STS [Saesa]",
         equipos_secundarios: "FT5 - JT5",
+        info_secundaria: "Requiere SODI para ingreso a S/E",
         contacto_secundario_enc: CONTACT_VAULT.C9,
         tipo_sscc: "CPF - CSF",
         plano: "planos/Bess El Manzano.PNG"
@@ -1510,6 +1540,8 @@
             plant.tipo_sscc,
             plant.nota_se_primaria || '',
             plant.nota_se_secundaria || '',
+            plant.info_primaria || '',
+            plant.info_secundaria || '',
             plant.radh_primaria || '',
             plant.radh_secundaria || '',
             decryptContact(plant.contacto_primario_enc),
@@ -1763,6 +1795,20 @@
         notaPrimEl.classList.add('hidden');
       }
 
+      // Render Substation Additional Info (S/E Primaria - SODI / Maniobras)
+      const infoPrimEl = document.getElementById('infoPrimariaContainer');
+      if (plant.info_primaria && plant.info_primaria.trim() !== '') {
+        infoPrimEl.innerHTML = `
+          <div class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700/80 shadow-2xs" style="font-family: Arial, sans-serif;">
+            <span>${plant.info_primaria}</span>
+          </div>
+        `;
+        infoPrimEl.classList.remove('hidden');
+      } else {
+        infoPrimEl.innerHTML = '';
+        infoPrimEl.classList.add('hidden');
+      }
+
       // 3. SECONDARY SUBSTATION (S/E SECUNDARIA)
       document.getElementById('lblSESecundaria').innerText = plant.se_secundaria || 'No registra';
       document.getElementById('lblPropietarioSecundario').innerText = plant.propietario_secundario || 'No registra';
@@ -1849,6 +1895,20 @@
       } else {
         notaSecEl.innerHTML = '';
         notaSecEl.classList.add('hidden');
+      }
+
+      // Render Substation Additional Info (S/E Secundaria - SODI / Maniobras)
+      const infoSecEl = document.getElementById('infoSecundariaContainer');
+      if (plant.info_secundaria && plant.info_secundaria.trim() !== '') {
+        infoSecEl.innerHTML = `
+          <div class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700/80 shadow-2xs" style="font-family: Arial, sans-serif;">
+            <span>${plant.info_secundaria}</span>
+          </div>
+        `;
+        infoSecEl.classList.remove('hidden');
+      } else {
+        infoSecEl.innerHTML = '';
+        infoSecEl.classList.add('hidden');
       }
 
       // 4. TOPOLOGY FLOW DIAGRAM UPDATE
@@ -2175,6 +2235,13 @@
     // 9. DIAGRAM VIEWER FUNCTIONS (UNILINEALES)
     // -------------------------------------------------------------------------
     let currentDiagramZoom = 1;
+    let diagramPanX = 0;
+    let diagramPanY = 0;
+    let isDraggingDiagram = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let initialPinchDist = null;
+    let initialPinchZoom = 1;
 
     function openDiagramModal() {
       const plant = PLANTS_DATA[currentPlantIndex];
@@ -2205,15 +2272,18 @@
     function closeDiagramModal() {
       const modal = document.getElementById('diagramModal');
       if (modal) modal.classList.add('hidden');
+      isDraggingDiagram = false;
     }
 
     function zoomDiagram(delta) {
-      currentDiagramZoom = Math.min(Math.max(0.5, currentDiagramZoom + delta), 3.0);
+      currentDiagramZoom = Math.min(Math.max(0.5, currentDiagramZoom + delta), 4.0);
       updateDiagramTransform();
     }
 
     function resetDiagramZoom() {
       currentDiagramZoom = 1;
+      diagramPanX = 0;
+      diagramPanY = 0;
       updateDiagramTransform();
     }
 
@@ -2221,12 +2291,88 @@
       const wrapper = document.getElementById('diagramWrapper');
       const label = document.getElementById('diagramZoomLevel');
       if (wrapper) {
-        wrapper.style.transform = `scale(${currentDiagramZoom})`;
+        wrapper.style.transform = `translate(${diagramPanX}px, ${diagramPanY}px) scale(${currentDiagramZoom})`;
       }
       if (label) {
         label.innerText = `${Math.round(currentDiagramZoom * 100)}%`;
       }
     }
+
+    // Drag-to-pan (mouse + touch) and mouse-wheel zoom inside diagramViewport
+    (function setupDiagramPanAndZoom() {
+      const viewport = document.getElementById('diagramViewport');
+      const wrapper = document.getElementById('diagramWrapper');
+      if (!viewport || !wrapper) return;
+
+      viewport.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return;
+        e.preventDefault();
+        isDraggingDiagram = true;
+        dragStartX = e.clientX - diagramPanX;
+        dragStartY = e.clientY - diagramPanY;
+        wrapper.classList.remove('transition-transform', 'duration-150');
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDraggingDiagram) return;
+        e.preventDefault();
+        diagramPanX = e.clientX - dragStartX;
+        diagramPanY = e.clientY - dragStartY;
+        updateDiagramTransform();
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (!isDraggingDiagram) return;
+        isDraggingDiagram = false;
+        wrapper.classList.add('transition-transform', 'duration-150');
+      });
+
+      viewport.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.15 : -0.15;
+        zoomDiagram(delta);
+      }, { passive: false });
+
+      // Touch support (1-finger pan + 2-finger pinch zoom)
+      viewport.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          isDraggingDiagram = true;
+          dragStartX = e.touches[0].clientX - diagramPanX;
+          dragStartY = e.touches[0].clientY - diagramPanY;
+          wrapper.classList.remove('transition-transform', 'duration-150');
+        } else if (e.touches.length === 2) {
+          isDraggingDiagram = false;
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          initialPinchDist = Math.hypot(dx, dy);
+          initialPinchZoom = currentDiagramZoom;
+          wrapper.classList.remove('transition-transform', 'duration-150');
+        }
+      }, { passive: false });
+
+      viewport.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1 && isDraggingDiagram) {
+          e.preventDefault();
+          diagramPanX = e.touches[0].clientX - dragStartX;
+          diagramPanY = e.touches[0].clientY - dragStartY;
+          updateDiagramTransform();
+        } else if (e.touches.length === 2 && initialPinchDist) {
+          e.preventDefault();
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          const dist = Math.hypot(dx, dy);
+          const ratio = dist / initialPinchDist;
+          currentDiagramZoom = Math.min(Math.max(0.5, initialPinchZoom * ratio), 4.0);
+          updateDiagramTransform();
+        }
+      }, { passive: false });
+
+      viewport.addEventListener('touchend', () => {
+        isDraggingDiagram = false;
+        initialPinchDist = null;
+        wrapper.classList.add('transition-transform', 'duration-150');
+      });
+    })();
 
     // Close modals on backdrop click or Escape key
     window.addEventListener('keydown', (e) => {
